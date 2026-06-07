@@ -126,6 +126,32 @@ docker compose --profile feed run --rm feed       # сгенерировать B
 `./dist`. Параметры фида (`--asn/--next-hop/--community`) задаются в сервисе `feed`
 в [`docker-compose.yml`](docker-compose.yml).
 
+### Живой BGP-фид (BIRD) — профили `bgp` / `bgp-demo`
+
+Контейнер `bird` (BIRD 2.x на Alpine) берёт собранные сети и анонсирует их подписчикам по BGP
+с community-тегом, обновляя маршруты на лету (`birdc configure` при изменении файла).
+
+```bash
+cp .env.example .env            # выставьте FEED_ENABLED=1, FEED_ASN, FEED_COMMUNITY и т.д.
+
+docker compose --profile bgp up -d --build        # collector + web + bird (продакшн-фид)
+docker compose --profile bgp-demo up -d --build   # + демо-подписчик (peer) для проверки
+```
+
+Проверка демо-сессии:
+
+```bash
+docker compose exec bird birdc show protocols          # сессии Established
+docker compose exec peer birdc show route all          # peer получил префиксы + community
+```
+
+- Маршруты — **`blackhole` + `next hop self`** (надёжный анонс списка префиксов из контейнера,
+  без проблем достижимости next-hop). Генерирует их `collector` при `FEED_ENABLED=1` в `./feed`.
+- **Подписчики**: явные сессии — в [`docker/bird/peers.conf`](docker/bird/peers.conf); быстрый
+  одиночный пир — через `PEER_IP`/`PEER_ASN` в `.env`. Демо-пир и фид сидят на сети `bgpnet`
+  со статическими адресами `172.31.0.10/20`.
+- Подробности доставки — в [`bgp/README.md`](bgp/README.md).
+
 ## Тесты
 
 ```bash

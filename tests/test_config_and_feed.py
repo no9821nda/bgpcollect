@@ -56,6 +56,25 @@ def test_render_bird_has_routes_and_community():
     assert "BGPCOLLECT_COMM = (65432, 500);" in out
 
 
+def test_render_bird_blackhole_mode():
+    out = feed.render_bird(
+        ["91.108.0.0/16", "149.154.160.0/20"],
+        my_asn=65000, next_hop="192.0.2.1", community="65432:500",
+        route_dest="blackhole",
+    )
+    assert "route 91.108.0.0/16 blackhole;" in out
+    assert "via BGPCOLLECT_NEXT_HOP" not in out          # next-hop не используется
+    assert "BGPCOLLECT_NEXT_HOP" not in out               # define отсутствует
+    assert "next hop self" in out                         # подсказка в примере сессии
+    assert "BGPCOLLECT_COMM = (65432, 500);" in out
+
+
+def test_render_bird_rejects_bad_route_dest():
+    import pytest
+    with pytest.raises(ValueError):
+        feed.render_bird(["91.108.0.0/16"], my_asn=1, next_hop="192.0.2.1", route_dest="oops")
+
+
 def test_render_exabgp_has_community():
     out = feed.render_exabgp(
         ["91.108.0.0/16"],

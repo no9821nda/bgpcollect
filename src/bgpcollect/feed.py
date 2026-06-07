@@ -47,7 +47,15 @@ def render_bird(
     next_hop: str,
     community: str = "65432:500",
     include_name: str = "bgpcollect_routes.conf",
+    route_dest: str = "via",
 ) -> str:
+    """route_dest: 'via' (route ... via NEXT_HOP) или 'blackhole' (для контейнера/route-server).
+
+    В режиме 'blackhole' next_hop в маршрутах не используется — анонс идёт с `next hop self`
+    на стороне BGP-сессии (см. peers.conf). Это надёжно работает без достижимого next-hop.
+    """
+    if route_dest not in ("via", "blackhole"):
+        raise ValueError(f"route_dest должен быть 'via' или 'blackhole', получено {route_dest!r}")
     comm_asn, comm_val = community.split(":", 1)
     template = _env().get_template("bird.conf.j2")
     return template.render(
@@ -57,6 +65,7 @@ def render_bird(
         comm_asn=comm_asn,
         comm_val=comm_val,
         include_name=include_name,
+        route_dest=route_dest,
         generated_at=datetime.now(timezone.utc).isoformat(timespec="seconds"),
     )
 
@@ -104,6 +113,7 @@ def build_feed(
     router_id: str | None = None,
     neighbor: str = "203.0.113.1",
     peer_asn: int = 64512,
+    route_dest: str = "via",
 ) -> dict[str, Path]:
     """Сгенерировать bird- и exabgp-конфиги в out_dir. Вернуть {формат: путь}."""
     networks = read_prefixes(ipv4_txt)
@@ -112,7 +122,10 @@ def build_feed(
 
     bird_path = out_dir / "bgpcollect_routes.conf"
     bird_path.write_text(
-        render_bird(networks, my_asn=my_asn, next_hop=next_hop, community=community),
+        render_bird(
+            networks, my_asn=my_asn, next_hop=next_hop,
+            community=community, route_dest=route_dest,
+        ),
         encoding="utf-8", newline="\n",
     )
 

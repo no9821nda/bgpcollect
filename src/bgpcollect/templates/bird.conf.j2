@@ -1,19 +1,24 @@
 # Сгенерировано bgpcollect — не редактировать вручную.
-# Префиксов: {{ networks | length }}   generated_at: {{ generated_at }}
+# Префиксов: {{ networks | length }}   generated_at: {{ generated_at }}   режим: {{ route_dest }}
 #
 # Как использовать (BIRD 2.x):
 #   1. Подключите этот файл из основного bird.conf:  include "{{ include_name }}";
-#   2. В BGP-сессии с подписчиком экспортируйте маршруты протокола `bgpcollect`
-#      через фильтр bgpcollect_export — он помечает их community {{ comm_asn }}:{{ comm_val }}.
-
+#   2. В BGP-сессии с подписчиком экспортируйте маршруты через фильтр bgpcollect_export —
+#      он помечает их community {{ comm_asn }}:{{ comm_val }}.
+{% if route_dest == 'via' %}
 define BGPCOLLECT_NEXT_HOP = {{ next_hop }};
+{%- endif %}
 define BGPCOLLECT_COMM = ({{ comm_asn }}, {{ comm_val }});
 
 # Статический протокол со всеми собранными сетями.
 protocol static bgpcollect {
     ipv4;
 {%- for net in networks %}
+{%- if route_dest == 'blackhole' %}
+    route {{ net }} blackhole;
+{%- else %}
     route {{ net }} via BGPCOLLECT_NEXT_HOP;
+{%- endif %}
 {%- endfor %}
 }
 
@@ -33,5 +38,8 @@ filter bgpcollect_export {
 #     ipv4 {
 #         import none;
 #         export filter bgpcollect_export;
+{%- if route_dest == 'blackhole' %}
+#         next hop self;          # обязательно для blackhole-маршрутов
+{%- endif %}
 #     };
 # }

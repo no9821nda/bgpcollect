@@ -1,0 +1,76 @@
+name: bird-feed
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docker/bird/**"
+      - "docker/peer/**"
+      - "docker/entrypoint.sh"
+      - "src/bgpcollect/feed.py"
+      - "src/bgpcollect/templates/**"
+      - "src/bgpcollect/cli.py"
+      - "docker-compose.yml"
+      - ".github/workflows/bird.yml"
+  workflow_dispatch: {}
+
+jobs:
+  feed-session:
+    runs-on: ubuntu-latest
+    env:
+      BGP_PORT: "1790"          # не занимаем привилегированный 179 на раннере
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Build images
+        run: docker compose build collector bird peer
+
+      - name: Generate feed routes (telegram, blackhole)
+        run: |
+          mkdir -p dist feed
+          docker compose run --rm \
+            -e RUN_ONCE=1 -e SERVICES=telegram -e FEED_ENABLED=1 -e VERBOSE=1 \
+            collector
+          echo "--- bgpcollect_routes.conf ---"
+          test -s feed/bgpcollect_routes.conf
+          grep -q "blackhole" feed/bgpcollect_routes.conf
+          grep -q "91.108"   feed/bgpcollect_routes.conf
+          echo "routes OK: $(grep -c blackhole feed/bgpcollect_routes.conf) blackhole-маршрутов"
+
+      - name: Start feed + demo peer
+        run: docker compose --profile bgp-demo up -d --no-deps bird peer
+
+      - name: Wait for BGP session and route propagation
+        run: |
+          ok=0
+          for i in $(seq 1 30); do
+            if docker compose exec -T peer birdc -s /run/bird/bird.ctl show route 2>/dev/null | grep -q "91.108"; then
+              ok=1; break
+            fi
+            sleep 2
+          done
+          [ "$ok" = "1" ] || { echo "маршруты не доехали до peer"; exit 1; }
+
+      - name: Feed — session established
+        run: |
+          docker compose exec -T bird birdc -s /run/bird/bird.ctl show protocols
+          docker compose exec -T bird birdc -s /run/bird/bird.ctl show protocols \
+            | grep -E "env_peer|subscriber" | grep -q "Established"
+
+      - name: Peer received Telegram prefixes WITH community 65432:500
+        run: |
+          docker compose exec -T peer birdc -s /run/bird/bird.ctl show route > peer_route.txt
+          docker compose exec -T peer birdc -s /run/bird/bird.ctl show route all > peer_route_all.txt
+          echo "--- peer routes ---"; cat peer_route.txt
+          grep -q "91.108" peer_route.txt
+          grep -q "(65432,500)" peer_route_all.txt && echo "OK: community 65432:500 присутствует"
+
+      - name: Dump logs on failure
+        if: failure()
+        run: |
+          docker compose logs bird || true
+          docker compose logs peer || true
+
+      - name: Teardown
+        if: always()
+        run: docker compose --profile bgp-demo down -v || true

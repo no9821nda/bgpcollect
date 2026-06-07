@@ -81,6 +81,7 @@ def cmd_feed(args) -> int:
     paths = feed_mod.build_feed(
         ipv4_txt, Path(args.out),
         my_asn=args.asn, next_hop=args.next_hop, community=args.community,
+        route_dest=args.route_dest,
     )
     for fmt, path in paths.items():
         print(f"  {fmt}: {path}")
@@ -110,6 +111,10 @@ def build_parser() -> argparse.ArgumentParser:
     f.add_argument("--asn", type=int, required=True, help="ваш local ASN")
     f.add_argument("--next-hop", required=True, help="next-hop IP для анонсов")
     f.add_argument("--community", default="65432:500", help="community-тег (asn:value)")
+    f.add_argument(
+        "--route-dest", choices=["via", "blackhole"], default="via",
+        help="via NEXT_HOP (bare-metal) или blackhole + next-hop-self (контейнер/route-server)",
+    )
     f.set_defaults(func=cmd_feed)
     return p
 

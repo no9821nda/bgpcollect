@@ -1,24 +1,43 @@
 name: bgpcollect
 
+# Профили:
+#   (без профиля)  collector + web
+#   bgp            + bird (живой BGP-фид)
+#   bgp-demo       + bird + peer (демо-подписчик для проверки приёма маршрутов)
+#   feed           одноразовая генерация конфигов фида в ./feed
+# Параметры берутся из .env (см. .env.example).
+
+networks:
+  bgpnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.31.0.0/24
+
 services:
-  # Сборщик: периодически (по умолчанию каждые 12ч) собирает сети в ./dist.
+  # Сборщик: периодически собирает сети в ./dist и (если FEED_ENABLED=1) генерирует
+  # bgpcollect_routes.conf (blackhole) в ./feed для контейнера bird.
   collector:
     build: .
     image: bgpcollect:latest
     container_name: bgpcollect
     restart: unless-stopped
     environment:
-      SERVICES: all
-      COLLECT_INTERVAL: "43200"   # 12 часов; 0/RUN_ONCE для одноразового прогона
+      SERVICES: ${SERVICES:-all}
+      COLLECT_INTERVAL: "${COLLECT_INTERVAL:-43200}"
       RUN_ONCE: "0"
       VERBOSE: "1"
-      # EXTRA_ARGS: "--expand-as-sets"
+      FEED_ENABLED: "${FEED_ENABLED:-0}"
+      FEED_OUT: /app/feed
+      FEED_ASN: "${FEED_ASN:-65000}"
+      FEED_NEXT_HOP: "${FEED_NEXT_HOP:-192.0.2.1}"
+      FEED_COMMUNITY: "${FEED_COMMUNITY:-65432:500}"
     volumes:
       - ./dist:/app/dist
-      # менять список ASN/источников без пересборки образа:
+      - ./feed:/app/feed
       - ./config/services.yaml:/app/config/services.yaml:ro
 
-  # Раздача готовых списков по HTTP: http://localhost:8080/  (antifilter-style)
+  # Раздача готовых списков по HTTP: http://localhost:8080/
   web:
     image: nginx:1.27-alpine
     container_name: bgpcollect-web
@@ -26,14 +45,60 @@ services:
     depends_on:
       - collector
     ports:
-      - "8080:80"
+      - "${WEB_PORT:-8080}:80"
     volumes:
       - ./dist:/usr/share/nginx/html:ro
       - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
 
-  # Опционально: одноразовая генерация конфигов BGP-фида (BIRD/ExaBGP) в ./feed.
+  # Живой BGP-фид (BIRD 2.x). Анонсирует собранные сети подписчикам с community.
+  bird:
+    build:
+      context: ./docker/bird
+    image: bgpcollect-bird:latest
+    container_name: bgpcollect-bird
+    profiles: ["bgp", "bgp-demo"]
+    restart: unless-stopped
+    depends_on:
+      - collector
+    environment:
+      FEED_ASN: "${FEED_ASN:-65000}"
+      ROUTER_ID: "${ROUTER_ID:-172.31.0.10}"
+      FEED_COMMUNITY: "${FEED_COMMUNITY:-65432:500}"
+      BIRD_RELOAD_INTERVAL: "${BIRD_RELOAD_INTERVAL:-30}"
+      # Демо-пир (для профиля bgp-demo). Для прода уберите PEER_IP и опишите пиров в peers.conf.
+      PEER_IP: "${PEER_IP:-172.31.0.20}"
+      PEER_ASN: "${PEER_ASN:-64512}"
+    volumes:
+      - ./feed:/etc/bird/feed:ro
+      - ./docker/bird/bird.conf:/etc/bird/bird.conf:ro
+      - ./docker/bird/peers.conf:/etc/bird/peers.conf:ro
+    ports:
+      - "${BGP_PORT:-179}:179"
+    networks:
+      bgpnet:
+        ipv4_address: 172.31.0.10
+
+  # Демо-подписчик: пирится к bird и принимает маршруты. Профиль bgp-demo.
+  #   docker compose exec peer birdc show route all
+  peer:
+    build:
+      context: ./docker/peer
+    image: bgpcollect-peer:latest
+    container_name: bgpcollect-peer
+    profiles: ["bgp-demo"]
+    depends_on:
+      - bird
+    environment:
+      FEED_IP: 172.31.0.10
+      FEED_ASN: "${FEED_ASN:-65000}"
+      PEER_ASN: "${PEER_ASN:-64512}"
+      ROUTER_ID: 172.31.0.20
+    networks:
+      bgpnet:
+        ipv4_address: 172.31.0.20
+
+  # Одноразовая генерация конфигов фида (BIRD/ExaBGP) в ./feed.
   #   docker compose --profile feed run --rm feed
-  # Подставьте свои --asn / --next-hop / --community.
   feed:
     build: .
     image: bgpcollect:latest
@@ -48,8 +113,10 @@ services:
       - -o
       - /app/feed
       - --asn
-      - "65000"
+      - "${FEED_ASN:-65000}"
       - --next-hop
-      - "192.0.2.1"
+      - "${FEED_NEXT_HOP:-192.0.2.1}"
       - --community
-      - "65432:500"
+      - "${FEED_COMMUNITY:-65432:500}"
+      - --route-dest
+      - blackhole
