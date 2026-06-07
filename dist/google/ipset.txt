@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: google
 # prefixes: 640
-# generated_at: 2026-06-07T11:57:39+00:00
+# generated_at: 2026-06-07T13:09:18+00:00
 # sources: ripestat-ris(AS×15), official:google_json, official:google_json
 
 create google hash:net family inet hashsize 4096 maxelem 1000000 -exist
