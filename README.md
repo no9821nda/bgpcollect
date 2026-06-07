@@ -73,9 +73,32 @@ bgpcollect feed -i dist/all/ipv4.txt -o feed --asn 65000 --next-hop 192.0.2.1
 | Telegram статические | из конфига | стабильные известные диапазоны |
 | IRR AS-SET (bgpq4-подобно) | IRRd `!i...` | опц. расширение ASN |
 | PeeringDB | `org_id` → nets | обнаружение сиблинг-ASN для ревью |
+| **Свой файл-список** | `lists:` → файл CIDR/IP | ваши произвольные списки |
+| **Домены** | `domains:` → A-записи | резолв доменов в IPv4 |
 
 > Hurricane Electric (bgp.he.net) официального API не имеет — используем как ручной ориентир
 > для сверки seed-ASN; в рантайме его заменяет RIPEstat/RIS.
+
+### Свои списки IP
+
+Любой сервис в [`config/services.yaml`](config/services.yaml) комбинирует источники
+`asns` / `static_prefixes` / `lists` / `domains`:
+
+```yaml
+services:
+  custom:
+    description: Мой список
+    static_prefixes: [203.0.113.0/24, 198.51.100.7]   # инлайн (IP без маски → /32)
+    lists: [lists/custom.txt]                          # файл: по одному CIDR/IP в строке, # — комментарий
+    domains: [example.com, api.example.com]            # резолв в A-записи
+```
+
+- Файлы-списки лежат в [`lists/`](lists/); путь — относительно запуска (в Docker — `/app`,
+  каталог монтируется как `./lists:/app/lists:ro`).
+- Все источники проходят общий фильтр: bogon/private/документационные (RFC 5737) диапазоны
+  отбрасываются, остальное агрегируется.
+- `domains` даёт лишь те IP, что вернул резолвер в момент запуска — для CDN это нестабильно
+  и неполно; для надёжного покрытия используйте `asns`.
 
 ## Сопровождение seed-ASN
 

@@ -11,7 +11,10 @@ import requests
 
 from . import aggregate, render
 from .config import Config, Service
-from .sources import irr, official, ripestat
+from .sources import domains as domain_src
+from .sources import irr
+from .sources import lists as list_src
+from .sources import official, ripestat
 
 log = logging.getLogger(__name__)
 
@@ -77,10 +80,24 @@ def collect_service(
         raw.extend(prefixes)
         sources.append(f"official:{src.type}")
 
-    # 3. Статические диапазоны.
+    # 3. Статические диапазоны (инлайн в services.yaml).
     if service.static_prefixes:
         raw.extend(service.static_prefixes)
         sources.append("static")
+
+    # 4. Локальные файлы-списки (CIDR/IP).
+    for rel in service.lists:
+        prefixes = list_src.read_list_file(rel)
+        if prefixes:
+            raw.extend(prefixes)
+            sources.append(f"list:{Path(rel).name}")
+
+    # 5. Домены -> A-записи.
+    if service.domains:
+        ips = domain_src.resolve_domains(service.domains)
+        if ips:
+            raw.extend(ips)
+            sources.append(f"domains×{len(service.domains)}")
 
     networks = aggregate.aggregate(raw, min_prefixlen=settings.min_ipv4_prefixlen)
     log.info(

@@ -24,6 +24,8 @@ class Service:
     as_sets: list[str] = field(default_factory=list)
     official: list[OfficialSource] = field(default_factory=list)
     static_prefixes: list[str] = field(default_factory=list)
+    lists: list[str] = field(default_factory=list)      # пути к файлам со списками CIDR/IP
+    domains: list[str] = field(default_factory=list)    # домены для резолва в A-записи
     parent: str | None = None
 
 
@@ -82,6 +84,8 @@ def load_config(path: str | Path) -> Config:
             as_sets=list(raw.get("as_sets", [])),
             official=_parse_official(raw.get("official", [])),
             static_prefixes=list(raw.get("static_prefixes", [])),
+            lists=[str(p) for p in raw.get("lists", [])],
+            domains=[str(d) for d in raw.get("domains", [])],
             parent=raw.get("parent"),
         )
 

@@ -36,6 +36,7 @@ services:
       - ./dist:/app/dist
       - ./feed:/app/feed
       - ./config/services.yaml:/app/config/services.yaml:ro
+      - ./lists:/app/lists:ro          # свои файлы-списки (service.lists)
 
   # Раздача готовых списков по HTTP: http://localhost:8080/
   web:
