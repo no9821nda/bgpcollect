@@ -27,6 +27,9 @@ bgpcollect = "bgpcollect.cli:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+bgpcollect = ["templates/*.j2"]
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]

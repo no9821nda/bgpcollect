@@ -101,6 +101,31 @@ AS-SET бывают избыточны, поэтому новые ASN добав
 - Для BGP-сервера — [`bgp/bgpcollect.service`](bgp/bgpcollect.service) + таймер: пересбор,
   регенерация конфига и `birdc configure`.
 
+## Docker / docker compose
+
+```bash
+docker compose up -d --build      # collector (сбор каждые 12ч) + web (раздача)
+```
+
+- **collector** — периодически собирает сети в смонтированный `./dist`
+  (интервал `COLLECT_INTERVAL`, по умолчанию 12ч; `RUN_ONCE=1` — один прогон).
+- **web** — nginx раздаёт списки: **http://localhost:8080/** (antifilter-style),
+  например `http://localhost:8080/all/ipv4.txt`.
+
+Управление:
+
+```bash
+docker compose logs -f collector             # лог сборки
+docker compose run --rm -e RUN_ONCE=1 collector   # разовый прогон сейчас
+docker compose run --rm collector discover meta   # произвольная подкоманда CLI
+docker compose --profile feed run --rm feed       # сгенерировать BGP-фид в ./feed
+```
+
+Список ASN правится в `config/services.yaml` (смонтирован в collector только для чтения —
+пересборка образа не нужна). Контейнер работает от root, чтобы без трения писать в bind-mount
+`./dist`. Параметры фида (`--asn/--next-hop/--community`) задаются в сервисе `feed`
+в [`docker-compose.yml`](docker-compose.yml).
+
 ## Тесты
 
 ```bash
@@ -125,6 +150,9 @@ src/bgpcollect/
   feed.py                 генерация BIRD/ExaBGP
   cli.py                  CLI
 bgp/                      ops: systemd unit, README про BGP-доставку
+Dockerfile                образ сборщика
+docker-compose.yml        collector + web (+ опц. профиль feed)
+docker/                   entrypoint.sh, nginx.conf
 dist/                     публикуемые списки (артефакт)
 tests/                    юнит + сетевой smoke
 ```

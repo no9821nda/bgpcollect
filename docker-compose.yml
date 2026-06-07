@@ -1,0 +1,55 @@
+name: bgpcollect
+
+services:
+  # Сборщик: периодически (по умолчанию каждые 12ч) собирает сети в ./dist.
+  collector:
+    build: .
+    image: bgpcollect:latest
+    container_name: bgpcollect
+    restart: unless-stopped
+    environment:
+      SERVICES: all
+      COLLECT_INTERVAL: "43200"   # 12 часов; 0/RUN_ONCE для одноразового прогона
+      RUN_ONCE: "0"
+      VERBOSE: "1"
+      # EXTRA_ARGS: "--expand-as-sets"
+    volumes:
+      - ./dist:/app/dist
+      # менять список ASN/источников без пересборки образа:
+      - ./config/services.yaml:/app/config/services.yaml:ro
+
+  # Раздача готовых списков по HTTP: http://localhost:8080/  (antifilter-style)
+  web:
+    image: nginx:1.27-alpine
+    container_name: bgpcollect-web
+    restart: unless-stopped
+    depends_on:
+      - collector
+    ports:
+      - "8080:80"
+    volumes:
+      - ./dist:/usr/share/nginx/html:ro
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+  # Опционально: одноразовая генерация конфигов BGP-фида (BIRD/ExaBGP) в ./feed.
+  #   docker compose --profile feed run --rm feed
+  # Подставьте свои --asn / --next-hop / --community.
+  feed:
+    build: .
+    image: bgpcollect:latest
+    profiles: ["feed"]
+    volumes:
+      - ./dist:/app/dist:ro
+      - ./feed:/app/feed
+    command:
+      - feed
+      - -i
+      - /app/dist/all/ipv4.txt
+      - -o
+      - /app/feed
+      - --asn
+      - "65000"
+      - --next-hop
+      - "192.0.2.1"
+      - --community
+      - "65432:500"

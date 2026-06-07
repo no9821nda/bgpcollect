@@ -1,0 +1,44 @@
+name: docker-build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Dockerfile"
+      - "docker/**"
+      - "docker-compose.yml"
+      - "src/**"
+      - "config/**"
+      - "pyproject.toml"
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Build image
+        run: docker build -t bgpcollect:ci .
+
+      - name: Smoke test — one-shot collect (telegram)
+        run: |
+          mkdir -p out
+          docker run --rm -e RUN_ONCE=1 -e SERVICES=telegram -e VERBOSE=1 \
+            -v "$PWD/out:/app/dist" bgpcollect:ci
+          test -s out/telegram/ipv4.txt
+          echo "OK: $(wc -l < out/telegram/ipv4.txt) prefixes"
+          grep -q "91.108" out/telegram/ipv4.txt && echo "known Telegram range present"
+
+      - name: Smoke test — feed generation
+        run: |
+          mkdir -p feed
+          docker run --rm \
+            -v "$PWD/out:/app/dist:ro" -v "$PWD/feed:/app/feed" \
+            bgpcollect:ci feed -i /app/dist/telegram/ipv4.txt -o /app/feed \
+            --asn 65000 --next-hop 192.0.2.1
+          test -s feed/bgpcollect_routes.conf
+          grep -q "BGPCOLLECT_COMM" feed/bgpcollect_routes.conf
+
+      - name: Validate compose file
+        run: docker compose config -q
