@@ -100,6 +100,27 @@ services:
 - `domains` даёт лишь те IP, что вернул резолвер в момент запуска — для CDN это нестабильно
   и неполно; для надёжного покрытия используйте `asns`.
 
+### Исключение диапазонов (`exclude`)
+
+`exclude:` вычитает указанные подсети из результата сервиса (set-difference по CIDR — режет
+и пересчитывает префиксы). Принимает те же источники, что и сбор (`asns/official/static_prefixes/
+lists/domains`). Так из Google убран **Google Cloud (GCP)**:
+
+```yaml
+google:
+  asns: [15169, ...]                       # без AS396982 (GOOGLE-CLOUD-PLATFORM)
+  official:
+    - {type: google_json, url: "https://www.gstatic.com/ipranges/goog.json"}   # все диапазоны Google
+  exclude:
+    official:
+      - {type: google_json, url: "https://www.gstatic.com/ipranges/cloud.json"} # вычесть GCP
+    asns: [396982]
+```
+
+Результат = `goog.json − cloud.json` (как рекомендует Google для «только сервисы Google»).
+На практике это срезало Google с ~640 до ~178 префиксов; `8.8.8.0/24` (Google DNS) остаётся,
+GCP-диапазоны (34.x/35.x и т.д.) исчезают.
+
 ## Сопровождение seed-ASN
 
 Списки ASN в `services.yaml` — это рабочий seed. Периодически проверяйте дрейф:

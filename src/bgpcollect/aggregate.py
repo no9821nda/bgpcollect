@@ -66,6 +66,33 @@ def aggregate(prefixes: Iterable[str], *, min_prefixlen: int = 8) -> list[IPv4Ne
     return merge(normalize(prefixes, min_prefixlen=min_prefixlen))
 
 
+def subtract(
+    includes: Iterable[IPv4Network],
+    excludes: Iterable[IPv4Network],
+) -> list[IPv4Network]:
+    """Вычесть из includes все диапазоны excludes (set-difference по адресному пространству).
+
+    Два CIDR-а либо не пересекаются, либо один вложен в другой — поэтому:
+      * exclude покрывает include  -> include выкидываем;
+      * exclude внутри include     -> режем include на части (address_exclude);
+      * не пересекаются            -> оставляем.
+    Результат — collapsed (склеенный) список.
+    """
+    work = list(merge(includes))
+    exc_list = list(merge(excludes))
+    for exc in exc_list:
+        nxt: list[IPv4Network] = []
+        for net in work:
+            if net.subnet_of(exc):          # include целиком внутри exclude (вкл. равенство) — убираем
+                continue
+            if exc.subnet_of(net):           # exclude строго внутри include — режем
+                nxt.extend(net.address_exclude(exc))
+            else:                            # не пересекаются — оставляем
+                nxt.append(net)
+        work = nxt
+    return merge(work)
+
+
 def count_addresses(networks: Iterable[IPv4Network]) -> int:
     """Сколько IPv4-адресов покрывают сети (для статистики/meta.json)."""
     return sum(net.num_addresses for net in networks)

@@ -35,6 +35,29 @@ def test_load_config_parses(tmp_path):
     assert cfg.services["telegram"].static_prefixes == ["91.108.0.0/16"]
 
 
+def test_load_config_parses_exclude(tmp_path):
+    text = """
+services:
+  google:
+    asns: [15169]
+    official:
+      - {type: google_json, url: "https://x/goog.json"}
+    exclude:
+      official:
+        - {type: google_json, url: "https://x/cloud.json"}
+      asns: [396982]
+  bare:
+    asns: [1]
+"""
+    cfg = load_config(_write(tmp_path, text))
+    g = cfg.services["google"]
+    assert g.exclude.asns == [396982]
+    assert g.exclude.official[0].url.endswith("cloud.json")
+    assert not g.exclude.is_empty()
+    # сервис без exclude -> пустой набор
+    assert cfg.services["bare"].exclude.is_empty()
+
+
 def test_load_config_bad_parent(tmp_path):
     bad = "services:\n  x:\n    parent: nope\n"
     with pytest.raises(ValueError):

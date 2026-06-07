@@ -63,3 +63,24 @@ def test_aggregate_end_to_end():
 
 def test_count_addresses():
     assert aggregate.count_addresses([net("8.8.8.0/24")]) == 256
+
+
+def test_subtract_carves_out_inner():
+    # из /22 вычитаем один /24 -> остаются три /24
+    result = aggregate.subtract([net("8.8.8.0/22")], [net("8.8.9.0/24")])
+    assert set(result) == {net("8.8.8.0/24"), net("8.8.10.0/23")}
+
+
+def test_subtract_drops_fully_covered():
+    result = aggregate.subtract([net("8.8.8.0/24")], [net("8.8.0.0/16")])
+    assert result == []
+
+
+def test_subtract_keeps_disjoint():
+    result = aggregate.subtract([net("8.8.8.0/24")], [net("1.1.1.0/24")])
+    assert result == [net("8.8.8.0/24")]
+
+
+def test_subtract_no_excludes_returns_merged():
+    result = aggregate.subtract([net("8.8.8.0/24"), net("8.8.9.0/24")], [])
+    assert result == [net("8.8.8.0/23")]

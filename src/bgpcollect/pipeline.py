@@ -10,7 +10,7 @@ from pathlib import Path
 import requests
 
 from . import aggregate, render
-from .config import Config, Service
+from .config import Config, Service, SourceSet
 from .sources import domains as domain_src
 from .sources import irr
 from .sources import lists as list_src
@@ -36,6 +36,23 @@ class ServiceResult:
         return len(self.networks)
 
 
+def _expand_asns(
+    asns: list[int],
+    as_sets: list[str],
+    *,
+    expand_as_sets: bool = False,
+    irr_server: str = "whois.radb.net",
+) -> list[int]:
+    result = set(asns)
+    if expand_as_sets:
+        for as_set in as_sets:
+            try:
+                result.update(irr.expand_as_set(as_set, server=irr_server))
+            except OSError as exc:
+                log.error("Не удалось раскрыть %s: %s", as_set, exc)
+    return sorted(result)
+
+
 def effective_asns(
     service: Service,
     *,
@@ -43,14 +60,50 @@ def effective_asns(
     irr_server: str = "whois.radb.net",
 ) -> list[int]:
     """Итоговый набор ASN сервиса: seed + опц. раскрытие AS-SET."""
-    asns = set(service.asns)
-    if expand_as_sets:
-        for as_set in service.as_sets:
-            try:
-                asns.update(irr.expand_as_set(as_set, server=irr_server))
-            except OSError as exc:
-                log.error("Не удалось раскрыть %s: %s", as_set, exc)
-    return sorted(asns)
+    return _expand_asns(
+        service.asns, service.as_sets, expand_as_sets=expand_as_sets, irr_server=irr_server
+    )
+
+
+def _gather(
+    session: requests.Session,
+    settings,
+    src: SourceSet,
+    *,
+    expand_as_sets: bool = False,
+) -> tuple[list[str], list[str], list[int]]:
+    """Собрать «сырые» префиксы из набора источников. Вернуть (raw, sources, asns)."""
+    raw: list[str] = []
+    sources: list[str] = []
+    asns = _expand_asns(src.asns, src.as_sets, expand_as_sets=expand_as_sets)
+
+    if asns:
+        ris = ripestat.fetch_many(session, asns, sourceapp=settings.ripestat_sourceapp)
+        for prefixes in ris.values():
+            raw.extend(prefixes)
+        sources.append(f"ripestat-ris(AS×{len(asns)})")
+
+    for s in src.official:
+        raw.extend(official.fetch_official(session, s))
+        sources.append(f"official:{s.type}")
+
+    if src.static_prefixes:
+        raw.extend(src.static_prefixes)
+        sources.append("static")
+
+    for rel in src.lists:
+        prefixes = list_src.read_list_file(rel)
+        if prefixes:
+            raw.extend(prefixes)
+            sources.append(f"list:{Path(rel).name}")
+
+    if src.domains:
+        ips = domain_src.resolve_domains(src.domains)
+        if ips:
+            raw.extend(ips)
+            sources.append(f"domains×{len(src.domains)}")
+
+    return raw, sources, asns
 
 
 def collect_service(
@@ -60,48 +113,29 @@ def collect_service(
     *,
     expand_as_sets: bool = False,
 ) -> tuple[list[aggregate.IPv4Network], list[str], int, list[int]]:
-    """Собрать и агрегировать IPv4-сети одного сервиса."""
+    """Собрать и агрегировать IPv4-сети одного сервиса (с учётом exclude-вычитания)."""
     settings = config.settings
-    asns = effective_asns(service, expand_as_sets=expand_as_sets)
 
-    raw: list[str] = []
-    sources: list[str] = []
-
-    # 1. Основной источник — RIPEstat/RIS по списку ASN.
-    if asns:
-        ris = ripestat.fetch_many(session, asns, sourceapp=settings.ripestat_sourceapp)
-        for prefixes in ris.values():
-            raw.extend(prefixes)
-        sources.append(f"ripestat-ris(AS×{len(asns)})")
-
-    # 2. Официальные источники.
-    for src in service.official:
-        prefixes = official.fetch_official(session, src)
-        raw.extend(prefixes)
-        sources.append(f"official:{src.type}")
-
-    # 3. Статические диапазоны (инлайн в services.yaml).
-    if service.static_prefixes:
-        raw.extend(service.static_prefixes)
-        sources.append("static")
-
-    # 4. Локальные файлы-списки (CIDR/IP).
-    for rel in service.lists:
-        prefixes = list_src.read_list_file(rel)
-        if prefixes:
-            raw.extend(prefixes)
-            sources.append(f"list:{Path(rel).name}")
-
-    # 5. Домены -> A-записи.
-    if service.domains:
-        ips = domain_src.resolve_domains(service.domains)
-        if ips:
-            raw.extend(ips)
-            sources.append(f"domains×{len(service.domains)}")
-
+    # include — собственные источники сервиса.
+    raw, sources, asns = _gather(
+        session, settings, service.source_set(), expand_as_sets=expand_as_sets
+    )
     networks = aggregate.aggregate(raw, min_prefixlen=settings.min_ipv4_prefixlen)
+
+    # exclude — вычитаем эти диапазоны из результата (например, GCP cloud.json у Google).
+    if not service.exclude.is_empty():
+        exc_raw, exc_sources, _ = _gather(
+            session, settings, service.exclude, expand_as_sets=expand_as_sets
+        )
+        # для exclude не отсекаем широкие диапазоны (min_prefixlen=1), чтобы вычесть их целиком
+        exc_nets = aggregate.aggregate(exc_raw, min_prefixlen=1)
+        before = len(networks)
+        networks = aggregate.subtract(networks, exc_nets)
+        sources.append("exclude[" + ", ".join(exc_sources) + "]")
+        log.info("%s: exclude убрал %d -> %d префиксов", service.name, before, len(networks))
+
     log.info(
-        "%s: raw=%d -> aggregated=%d префиксов (источники: %s)",
+        "%s: raw=%d -> %d префиксов (источники: %s)",
         service.name, len(raw), len(networks), ", ".join(sources),
     )
     return networks, sources, len(raw), asns

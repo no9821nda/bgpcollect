@@ -17,6 +17,23 @@ class OfficialSource:
 
 
 @dataclass
+class SourceSet:
+    """Набор источников IP (используется и для сбора, и для exclude-вычитания)."""
+    asns: list[int] = field(default_factory=list)
+    as_sets: list[str] = field(default_factory=list)
+    official: list[OfficialSource] = field(default_factory=list)
+    static_prefixes: list[str] = field(default_factory=list)
+    lists: list[str] = field(default_factory=list)
+    domains: list[str] = field(default_factory=list)
+
+    def is_empty(self) -> bool:
+        return not (
+            self.asns or self.as_sets or self.official
+            or self.static_prefixes or self.lists or self.domains
+        )
+
+
+@dataclass
 class Service:
     name: str
     description: str = ""
@@ -26,7 +43,15 @@ class Service:
     static_prefixes: list[str] = field(default_factory=list)
     lists: list[str] = field(default_factory=list)      # пути к файлам со списками CIDR/IP
     domains: list[str] = field(default_factory=list)    # домены для резолва в A-записи
+    exclude: SourceSet = field(default_factory=SourceSet)  # вычесть эти диапазоны из результата
     parent: str | None = None
+
+    def source_set(self) -> SourceSet:
+        """Собственные источники сервиса как SourceSet (то, что собираем = include)."""
+        return SourceSet(
+            asns=self.asns, as_sets=self.as_sets, official=self.official,
+            static_prefixes=self.static_prefixes, lists=self.lists, domains=self.domains,
+        )
 
 
 @dataclass
@@ -67,6 +92,18 @@ def _parse_official(raw: list[dict]) -> list[OfficialSource]:
     return sources
 
 
+def _parse_source_set(raw: dict) -> SourceSet:
+    raw = raw or {}
+    return SourceSet(
+        asns=[int(a) for a in raw.get("asns", [])],
+        as_sets=list(raw.get("as_sets", [])),
+        official=_parse_official(raw.get("official", [])),
+        static_prefixes=list(raw.get("static_prefixes", [])),
+        lists=[str(p) for p in raw.get("lists", [])],
+        domains=[str(d) for d in raw.get("domains", [])],
+    )
+
+
 def load_config(path: str | Path) -> Config:
     """Прочитать и провалидировать конфиг сервисов."""
     path = Path(path)
@@ -86,6 +123,7 @@ def load_config(path: str | Path) -> Config:
             static_prefixes=list(raw.get("static_prefixes", [])),
             lists=[str(p) for p in raw.get("lists", [])],
             domains=[str(d) for d in raw.get("domains", [])],
+            exclude=_parse_source_set(raw.get("exclude", {})),
             parent=raw.get("parent"),
         )
 

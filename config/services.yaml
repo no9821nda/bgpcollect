@@ -21,12 +21,18 @@ settings:
 
 services:
   google:
-    description: Google LLC (поиск, сервисы, GCP)
-    asns: [15169, 36040, 19527, 396982, 41264, 139070, 139190, 36492, 45566, 24424, 22577, 26910, 36384, 36385, 43515]
+    description: Google LLC (поиск и сервисы Google; БЕЗ Google Cloud / GCP customer ranges)
+    # AS396982 (GOOGLE-CLOUD-PLATFORM) намеренно убран из include.
+    asns: [15169, 36040, 19527, 41264, 139070, 139190, 36492, 45566, 24424, 22577, 26910, 36384, 36385, 43515]
     as_sets: ["AS-GOOGLE"]
     official:
+      # goog.json = ВСЕ диапазоны Google (сервисы + GCP). GCP вычитаем ниже в exclude.
       - { type: google_json, url: "https://www.gstatic.com/ipranges/goog.json" }
-      - { type: google_json, url: "https://www.gstatic.com/ipranges/cloud.json" }
+    exclude:
+      # cloud.json = диапазоны Google Cloud (GCP). Google рекомендует: google-сервисы = goog.json − cloud.json.
+      official:
+        - { type: google_json, url: "https://www.gstatic.com/ipranges/cloud.json" }
+      asns: [396982]   # на случай GCP-префиксов, анонсируемых не из cloud.json
 
   youtube:
     description: YouTube (обслуживается из Google-ASN)
