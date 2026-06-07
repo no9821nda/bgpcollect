@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-06-07T11:57:47+00:00",
+  "sources": [
+    "ripestat-ris(AS×2)"
+  ],
+  "asns": [
+    36040,
+    43515
+  ],
+  "raw_prefix_count": 337,
+  "added": 134,
+  "removed": 0,
+  "service": "youtube",
+  "prefix_count": 134,
+  "address_count": 825344
+}

@@ -1,0 +1,50 @@
+# Конфигурация целевых сервисов: сервис -> источники IPv4-сетей.
+#
+# Поля сервиса:
+#   asns:            курируемый seed-список ASN (основной источник истины).
+#   as_sets:         IRR AS-SET для опционального расширения (только как подсказки, см. --expand-as-sets).
+#   official:        официальные/публичные источники для сверки и дополнения.
+#                    type: google_json | whois_asset
+#   static_prefixes: статически заданные, публично известные диапазоны.
+#   parent:          сервис обслуживается из ASN другого сервиса (для алиасов вроде youtube->google).
+#
+# ASN ниже — рабочий seed. Перед продакшеном сверить через PeeringDB org_id и bgp.he.net
+# (см. `bgpcollect discover <service>`), список курируется руками.
+
+settings:
+  # Минимальная длина префикса IPv4, которую считаем разумной (отсекаем подозрительно широкие).
+  min_ipv4_prefixlen: 8
+  # Параметр RIPEstat sourceapp — вежливая идентификация клиента.
+  ripestat_sourceapp: bgpcollect
+  # Guardrail: не публиковать, если число префиксов упало больше чем на эту долю против прошлого запуска.
+  max_shrink_ratio: 0.5
+
+services:
+  google:
+    description: Google LLC (поиск, сервисы, GCP)
+    asns: [15169, 36040, 19527, 396982, 41264, 139070, 139190, 36492, 45566, 24424, 22577, 26910, 36384, 36385, 43515]
+    as_sets: ["AS-GOOGLE"]
+    official:
+      - { type: google_json, url: "https://www.gstatic.com/ipranges/goog.json" }
+      - { type: google_json, url: "https://www.gstatic.com/ipranges/cloud.json" }
+
+  youtube:
+    description: YouTube (обслуживается из Google-ASN)
+    parent: google
+    asns: [43515, 36040]
+
+  meta:
+    description: Meta Platforms (Facebook, Instagram, WhatsApp)
+    asns: [32934, 54115, 63293, 149642, 149769]
+    as_sets: ["AS-FACEBOOK"]
+    official:
+      - { type: whois_asset, server: "whois.radb.net", query: "!gAS32934" }
+
+  telegram:
+    description: Telegram Messenger
+    asns: [62041, 62014, 44907, 59930, 211157]
+    static_prefixes:
+      - 91.108.0.0/16
+      - 149.154.160.0/20
+      - 95.161.64.0/20
+      - 185.76.151.0/24

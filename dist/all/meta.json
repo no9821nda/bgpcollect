@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-06-07T11:57:55+00:00",
+  "sources": [
+    "official:google_json",
+    "official:whois_asset",
+    "ripestat-ris(AS×15)",
+    "ripestat-ris(AS×2)",
+    "ripestat-ris(AS×5)",
+    "static"
+  ],
+  "services": [
+    "google",
+    "youtube",
+    "meta",
+    "telegram"
+  ],
+  "service": "all",
+  "prefix_count": 680,
+  "address_count": 23435776
+}

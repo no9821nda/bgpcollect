@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-06-07T11:57:55+00:00",
+  "sources": [
+    "ripestat-ris(AS×5)",
+    "static"
+  ],
+  "asns": [
+    44907,
+    59930,
+    62014,
+    62041,
+    211157
+  ],
+  "raw_prefix_count": 28,
+  "added": 0,
+  "removed": 0,
+  "service": "telegram",
+  "prefix_count": 5,
+  "address_count": 74496
+}

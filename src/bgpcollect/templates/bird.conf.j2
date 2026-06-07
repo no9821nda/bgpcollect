@@ -1,0 +1,37 @@
+# Сгенерировано bgpcollect — не редактировать вручную.
+# Префиксов: {{ networks | length }}   generated_at: {{ generated_at }}
+#
+# Как использовать (BIRD 2.x):
+#   1. Подключите этот файл из основного bird.conf:  include "{{ include_name }}";
+#   2. В BGP-сессии с подписчиком экспортируйте маршруты протокола `bgpcollect`
+#      через фильтр bgpcollect_export — он помечает их community {{ comm_asn }}:{{ comm_val }}.
+
+define BGPCOLLECT_NEXT_HOP = {{ next_hop }};
+define BGPCOLLECT_COMM = ({{ comm_asn }}, {{ comm_val }});
+
+# Статический протокол со всеми собранными сетями.
+protocol static bgpcollect {
+    ipv4;
+{%- for net in networks %}
+    route {{ net }} via BGPCOLLECT_NEXT_HOP;
+{%- endfor %}
+}
+
+# Фильтр для экспорта в сторону подписчиков: помечаем community и отдаём только наши маршруты.
+filter bgpcollect_export {
+    if proto = "bgpcollect" then {
+        bgp_community.add(BGPCOLLECT_COMM);
+        accept;
+    }
+    reject;
+}
+
+# Пример BGP-сессии с подписчиком (заполните neighbor/ASN):
+# protocol bgp subscriber1 {
+#     local as {{ my_asn }};
+#     neighbor 203.0.113.1 as 64512;
+#     ipv4 {
+#         import none;
+#         export filter bgpcollect_export;
+#     };
+# }

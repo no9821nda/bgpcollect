@@ -1,0 +1,29 @@
+# systemd unit: периодический сбор + перегенерация BGP-фида и reload BIRD.
+# Положить в /etc/systemd/system/ вместе с bgpcollect.timer (ниже в комментарии).
+#
+# [Timer] (отдельный файл bgpcollect.timer):
+#   [Unit]
+#   Description=Run bgpcollect periodically
+#   [Timer]
+#   OnCalendar=*-*-* 00/12:00:00
+#   Persistent=true
+#   [Install]
+#   WantedBy=timers.target
+
+[Unit]
+Description=bgpcollect: collect service prefixes and refresh BGP feed
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/bgpcollect
+ExecStart=/opt/bgpcollect/.venv/bin/python -m bgpcollect collect -s all -o dist
+ExecStart=/opt/bgpcollect/.venv/bin/python -m bgpcollect feed \
+    -i dist/all/ipv4.txt -o /etc/bird/bgpcollect \
+    --asn 65000 --next-hop 192.0.2.1 --community 65432:500
+# Применить новые маршруты без рестарта сессий:
+ExecStartPost=/usr/sbin/birdc configure
+
+[Install]
+WantedBy=multi-user.target

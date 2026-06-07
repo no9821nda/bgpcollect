@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-06-07T11:57:54+00:00",
+  "sources": [
+    "ripestat-ris(AS×5)",
+    "official:whois_asset"
+  ],
+  "asns": [
+    32934,
+    54115,
+    63293,
+    149642,
+    149769
+  ],
+  "raw_prefix_count": 1176,
+  "added": 35,
+  "removed": 0,
+  "service": "meta",
+  "prefix_count": 35,
+  "address_count": 540928
+}
