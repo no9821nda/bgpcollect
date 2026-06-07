@@ -43,19 +43,22 @@ def test_normalize_dedup_and_filter():
 
 
 def test_merge_adjacent_and_nested():
-    merged = aggregate.merge([net("192.0.0.0/24"), net("192.0.1.0/24")])
-    assert merged == [net("192.0.0.0/23")]
+    # merge не фильтрует — только склейка/вложенность
+    merged = aggregate.merge([net("8.8.8.0/24"), net("8.8.9.0/24")])
+    assert merged == [net("8.8.8.0/23")]
 
     merged2 = aggregate.merge([net("10.0.0.0/8"), net("10.1.2.0/24")])
     assert merged2 == [net("10.0.0.0/8")]  # вложенный поглощён
 
 
 def test_aggregate_end_to_end():
+    # используем заведомо публичные адреса (8.8.0.0/16 — Google),
+    # чтобы не зависеть от классификации спец-диапазонов в разных патчах Python
     result = aggregate.aggregate(
-        ["192.0.0.0/24", "192.0.1.0/24", "10.0.0.0/8"], min_prefixlen=8
+        ["8.8.8.0/24", "8.8.9.0/24", "10.0.0.0/8"], min_prefixlen=8
     )
-    # private отфильтрован, два смежных склеены
-    assert result == [net("192.0.0.0/23")]
+    # private (10/8) отфильтрован, два смежных /24 склеены в /23
+    assert result == [net("8.8.8.0/23")]
 
 
 def test_count_addresses():
