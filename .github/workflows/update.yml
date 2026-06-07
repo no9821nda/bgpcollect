@@ -3,7 +3,12 @@ name: update-prefixes
 on:
   schedule:
     - cron: "0 */12 * * *"   # каждые 12 часов
-  workflow_dispatch: {}        # ручной запуск
+  workflow_dispatch:           # ручной запуск
+    inputs:
+      force:
+        description: "Опубликовать даже при большом падении числа префиксов (--force)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -25,7 +30,7 @@ jobs:
         run: pytest -q
 
       - name: Collect prefixes
-        run: python -m bgpcollect -v collect -s all -o dist
+        run: python -m bgpcollect -v collect -s all -o dist ${{ inputs.force && '--force' || '' }}
 
       - name: Commit updated lists
         run: |
