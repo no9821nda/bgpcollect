@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-07T17:15:28+00:00",
+  "generated_at": "2026-06-08T14:52:04+00:00",
   "sources": [
     "ripestat-ris(AS×14)",
     "official:google_json",
@@ -21,9 +21,9 @@
     139070,
     139190
   ],
-  "raw_prefix_count": 2309,
-  "added": 51,
-  "removed": 513,
+  "raw_prefix_count": 2310,
+  "added": 0,
+  "removed": 0,
   "service": "google",
   "prefix_count": 178,
   "address_count": 1759744
