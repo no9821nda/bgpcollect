@@ -1,21 +1,19 @@
 {
-  "generated_at": "2026-06-08T14:52:09+00:00",
+  "generated_at": "2026-06-09T11:44:59+00:00",
   "sources": [
     "exclude[ripestat-ris(AS×1), official:google_json]",
     "official:google_json",
     "official:whois_asset",
     "ripestat-ris(AS×14)",
-    "ripestat-ris(AS×2)",
     "ripestat-ris(AS×5)",
     "static"
   ],
   "services": [
     "google",
-    "youtube",
     "meta",
     "telegram"
   ],
   "service": "all",
-  "prefix_count": 222,
-  "address_count": 3072000
+  "prefix_count": 218,
+  "address_count": 2375168
 }
