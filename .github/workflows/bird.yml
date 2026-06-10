@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BGP_PORT: "1790"          # не занимаем привилегированный 179 на раннере
+      PEER_IP: "172.31.0.20"    # env-пир для демо (дефолт в compose теперь пустой)
     steps:
       - uses: actions/checkout@v6
 

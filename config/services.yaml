@@ -6,7 +6,6 @@
 #   official:        официальные/публичные источники для сверки и дополнения.
 #                    type: google_json | whois_asset
 #   static_prefixes: статически заданные, публично известные диапазоны.
-#   parent:          сервис обслуживается из ASN другого сервиса (для алиасов вроде youtube->google).
 #
 # ASN ниже — рабочий seed. Перед продакшеном сверить через PeeringDB org_id и bgp.he.net
 # (см. `bgpcollect discover <service>`), список курируется руками.
@@ -36,7 +35,6 @@ services:
 
   youtube:
     description: YouTube (обслуживается из Google-ASN)
-    parent: google
     asns: [43515, 36040]
 
   meta:

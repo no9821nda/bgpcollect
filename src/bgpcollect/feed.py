@@ -12,6 +12,8 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
+from .util import atomic_write
+
 TEMPLATES_DIR = Path(__file__).parent / "templates"
 
 
@@ -120,21 +122,22 @@ def build_feed(
     out_dir.mkdir(parents=True, exist_ok=True)
     router_id = router_id or next_hop
 
+    # атомарно: bgpcollect_routes.conf параллельно читает bird-reloader
     bird_path = out_dir / "bgpcollect_routes.conf"
-    bird_path.write_text(
+    atomic_write(
+        bird_path,
         render_bird(
             networks, my_asn=my_asn, next_hop=next_hop,
             community=community, route_dest=route_dest,
         ),
-        encoding="utf-8", newline="\n",
     )
 
     exabgp_path = out_dir / "exabgp.conf"
-    exabgp_path.write_text(
+    atomic_write(
+        exabgp_path,
         render_exabgp(
             networks, my_asn=my_asn, router_id=router_id, next_hop=next_hop,
             neighbor=neighbor, peer_asn=peer_asn, community=community,
         ),
-        encoding="utf-8", newline="\n",
     )
     return {"bird": bird_path, "exabgp": exabgp_path}

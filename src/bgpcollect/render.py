@@ -45,6 +45,9 @@ def render_mikrotik(name: str, networks: list[IPv4Network], meta: Meta) -> str:
 
 def render_nftables(name: str, networks: list[IPv4Network], meta: Meta) -> str:
     """nftables: именованный set с элементами-сетями."""
+    if not networks:
+        # пустой define невалиден/бессмыслен — отдаём только предупреждение
+        return _header(name, networks, meta, "#") + "# ПУСТО: префиксов нет, set не сгенерирован.\n"
     elems = ",\n        ".join(str(net) for net in networks)
     body = (
         f"define {name}_v4 = {{\n        {elems}\n}}\n\n"
@@ -69,6 +72,9 @@ def render_ipset(name: str, networks: list[IPv4Network], meta: Meta) -> str:
 
 def render_wireguard(name: str, networks: list[IPv4Network], meta: Meta) -> str:
     """WireGuard: строка AllowedIPs (через запятую)."""
+    if not networks:
+        # пустое `AllowedIPs = ` заблокировало бы клиенту весь трафик — не отдаём его
+        return _header(name, networks, meta, "#") + "# ПУСТО: префиксов нет, AllowedIPs не сгенерирован.\n"
     allowed = ", ".join(str(net) for net in networks)
     return _header(name, networks, meta, "#") + f"AllowedIPs = {allowed}\n"
 

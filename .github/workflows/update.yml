@@ -41,5 +41,6 @@ jobs:
             echo "Изменений нет."
           else
             git commit -m "chore: update prefix lists ($(date -u +%Y-%m-%dT%H:%MZ))"
+            git pull --rebase origin main   # на случай параллельного пуша
             git push
           fi

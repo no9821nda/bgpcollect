@@ -66,8 +66,9 @@ services:
       ROUTER_ID: "${ROUTER_ID:-172.31.0.10}"
       FEED_COMMUNITY: "${FEED_COMMUNITY:-65432:500}"
       BIRD_RELOAD_INTERVAL: "${BIRD_RELOAD_INTERVAL:-30}"
-      # Демо-пир (для профиля bgp-demo). Для прода уберите PEER_IP и опишите пиров в peers.conf.
-      PEER_IP: "${PEER_IP:-172.31.0.20}"
+      # Одиночный пир из env. ПУСТО по умолчанию: в профиле bgp пиров описывают в peers.conf.
+      # Для bgp-demo задайте PEER_IP=172.31.0.20 в .env (см. .env.example).
+      PEER_IP: "${PEER_IP:-}"
       PEER_ASN: "${PEER_ASN:-64512}"
     volumes:
       - ./feed:/etc/bird/feed:ro

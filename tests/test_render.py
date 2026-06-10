@@ -45,3 +45,16 @@ def test_render_meta_json():
 def test_render_all_keys():
     out = render.render_all("google", NETS, META)
     assert set(out) >= {"ipv4.txt", "mikrotik.rsc", "nftables.conf", "meta.json"}
+
+
+def test_render_wireguard_empty_is_safe():
+    out = render.render_wireguard("x", [], META)
+    # пустой директивы `AllowedIPs = ` быть не должно (заблокировала бы весь трафик)
+    assert "AllowedIPs =" not in out
+    assert "ПУСТО" in out
+
+
+def test_render_nftables_empty_is_safe():
+    out = render.render_nftables("x", [], META)
+    assert "define" not in out
+    assert "ПУСТО" in out

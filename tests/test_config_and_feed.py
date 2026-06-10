@@ -12,7 +12,6 @@ services:
     official:
       - {type: google_json, url: "https://example.test/goog.json"}
   youtube:
-    parent: google
     asns: [43515]
   telegram:
     asns: [62041]
@@ -31,7 +30,6 @@ def test_load_config_parses(tmp_path):
     assert set(cfg.services) == {"google", "youtube", "telegram"}
     assert cfg.services["google"].asns == [15169, 36040]
     assert cfg.services["google"].official[0].type == "google_json"
-    assert cfg.services["youtube"].parent == "google"
     assert cfg.services["telegram"].static_prefixes == ["91.108.0.0/16"]
 
 
@@ -58,9 +56,9 @@ services:
     assert cfg.services["bare"].exclude.is_empty()
 
 
-def test_load_config_bad_parent(tmp_path):
-    bad = "services:\n  x:\n    parent: nope\n"
-    with pytest.raises(ValueError):
+def test_load_config_unknown_settings_key(tmp_path):
+    bad = "settings:\n  min_ipv4_prefixlen: 8\n  typo_key: 1\nservices:\n  x:\n    asns: [1]\n"
+    with pytest.raises(ValueError, match="typo_key"):
         load_config(_write(tmp_path, bad))
 
 

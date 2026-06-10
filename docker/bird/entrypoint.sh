@@ -65,19 +65,30 @@ echo "[bird] конфиг валиден; запуск (router id $ROUTER_ID, lo
 
 bird -f -c /etc/bird/bird.conf -s "$SOCK" &
 BIRD_PID=$!
-trap 'kill "$BIRD_PID" 2>/dev/null || true' TERM INT
+SLEEP_PID=""
+term() {
+    [ -n "$SLEEP_PID" ] && kill "$SLEEP_PID" 2>/dev/null
+    kill "$BIRD_PID" 2>/dev/null
+}
+trap term TERM INT
 
-# Reloader: при изменении исходного routes-файла копируем и делаем `configure` (без дропа сессий).
+# Reloader: при изменении исходного routes-файла копируем (tmp+mv — bird при configure
+# никогда не увидит частичный файл) и делаем `configure` (без дропа сессий).
+# sleep в фоне + wait — SIGTERM прерывает ожидание мгновенно, docker stop не упирается в SIGKILL.
 sum_of() { if [ -s "$1" ]; then md5sum "$1" | awk '{print $1}'; else echo ""; fi; }
 last="$(sum_of "$SRC_ROUTES")"
 while kill -0 "$BIRD_PID" 2>/dev/null; do
-    sleep "$RELOAD_INTERVAL"
+    sleep "$RELOAD_INTERVAL" &
+    SLEEP_PID=$!
+    wait "$SLEEP_PID" || true
+    SLEEP_PID=""
+    kill -0 "$BIRD_PID" 2>/dev/null || break
     cur="$(sum_of "$SRC_ROUTES")"
     if [ -n "$cur" ] && [ "$cur" != "$last" ]; then
         echo "[bird] маршруты обновились — birdc configure"
-        cp "$SRC_ROUTES" "$RUN_ROUTES"
+        cp "$SRC_ROUTES" "$RUN_ROUTES.tmp" && mv "$RUN_ROUTES.tmp" "$RUN_ROUTES"
         birdc -s "$SOCK" configure || echo "[bird] configure упал"
         last="$cur"
     fi
 done
-wait "$BIRD_PID"
+wait "$BIRD_PID" || true

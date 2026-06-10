@@ -11,6 +11,7 @@ import requests
 
 from . import aggregate, render
 from .config import Config, Service, SourceSet
+from .util import atomic_write
 from .sources import domains as domain_src
 from .sources import irr
 from .sources import lists as list_src
@@ -204,9 +205,9 @@ def run_service(
 
 
 def _write_outputs(svc_dir: Path, name: str, networks, meta) -> None:
-    svc_dir.mkdir(parents=True, exist_ok=True)
+    # атомарно: эти файлы параллельно читают nginx (./dist) и bird-reloader (./feed)
     for fname, content in render.render_all(name, networks, meta).items():
-        (svc_dir / fname).write_text(content, encoding="utf-8", newline="\n")
+        atomic_write(svc_dir / fname, content)
 
 
 def run_all(
@@ -224,19 +225,35 @@ def run_all(
         for name in services
     ]
 
-    # Объединённый список из всех опубликованных сервисов.
+    # Объединённый список: опубликованные сервисы — свежие данные; SKIP-нутые guardrail'ом —
+    # их предыдущий опубликованный ipv4.txt (иначе сервис молча выпал бы из BGP-фида).
     combined: list[aggregate.IPv4Network] = []
     used_sources: set[str] = set()
+    stale: list[str] = []
     for r in results:
         if r.published:
             combined.extend(r.networks)
             used_sources.update(r.sources_used)
+        else:
+            prev = _read_previous(out_dir / r.name / "ipv4.txt")
+            if prev:
+                combined.extend(aggregate.normalize(prev, min_prefixlen=1))
+                stale.append(r.name)
+                log.warning(
+                    "all: сервис %s пропущен guardrail'ом — использую предыдущие %d префиксов",
+                    r.name, len(prev),
+                )
     combined = aggregate.merge(combined)
     meta = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "sources": sorted(used_sources),
         "services": [r.name for r in results if r.published],
+        "stale_services": stale,
     }
     _write_outputs(out_dir / "all", "all", combined, meta)
-    log.info("all: %d префиксов из %d сервисов", len(combined), len(meta["services"]))
+    log.info(
+        "all: %d префиксов из %d сервисов%s",
+        len(combined), len(meta["services"]),
+        f" (+{len(stale)} stale: {', '.join(stale)})" if stale else "",
+    )
     return results

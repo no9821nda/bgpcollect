@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, fields
 from pathlib import Path
 
 import yaml
@@ -44,7 +44,6 @@ class Service:
     lists: list[str] = field(default_factory=list)      # пути к файлам со списками CIDR/IP
     domains: list[str] = field(default_factory=list)    # домены для резолва в A-записи
     exclude: SourceSet = field(default_factory=SourceSet)  # вычесть эти диапазоны из результата
-    parent: str | None = None
 
     def source_set(self) -> SourceSet:
         """Собственные источники сервиса как SourceSet (то, что собираем = include)."""
@@ -109,7 +108,14 @@ def load_config(path: str | Path) -> Config:
     path = Path(path)
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
 
-    settings = Settings(**(data.get("settings") or {}))
+    raw_settings = data.get("settings") or {}
+    known_keys = {f.name for f in fields(Settings)}
+    unknown = set(raw_settings) - known_keys
+    if unknown:
+        raise ValueError(
+            f"Неизвестные ключи в settings: {sorted(unknown)}; допустимы: {sorted(known_keys)}"
+        )
+    settings = Settings(**raw_settings)
 
     services: dict[str, Service] = {}
     for name, raw in (data.get("services") or {}).items():
@@ -124,17 +130,9 @@ def load_config(path: str | Path) -> Config:
             lists=[str(p) for p in raw.get("lists", [])],
             domains=[str(d) for d in raw.get("domains", [])],
             exclude=_parse_source_set(raw.get("exclude", {})),
-            parent=raw.get("parent"),
         )
 
     if not services:
         raise ValueError(f"В {path} нет ни одного сервиса")
-
-    # Проверка ссылок parent.
-    for svc in services.values():
-        if svc.parent and svc.parent not in services:
-            raise ValueError(
-                f"Сервис '{svc.name}' ссылается на несуществующий parent '{svc.parent}'"
-            )
 
     return Config(settings=settings, services=services)
