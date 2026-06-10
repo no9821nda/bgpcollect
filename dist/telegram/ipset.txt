@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: telegram
 # prefixes: 5
-# generated_at: 2026-06-09T19:36:01+00:00
+# generated_at: 2026-06-10T12:41:39+00:00
 # sources: ripestat-ris(AS×5), static
 
 create telegram hash:net family inet hashsize 4096 maxelem 1000000 -exist

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-09T19:36:01+00:00",
+  "generated_at": "2026-06-10T12:41:39+00:00",
   "sources": [
     "exclude[ripestat-ris(AS×1), official:google_json]",
     "official:google_json",
@@ -13,7 +13,10 @@
     "meta",
     "telegram"
   ],
+  "stale_services": [
+    "youtube"
+  ],
   "service": "all",
-  "prefix_count": 219,
-  "address_count": 2379264
+  "prefix_count": 223,
+  "address_count": 3076096
 }
