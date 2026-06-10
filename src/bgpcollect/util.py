@@ -21,6 +21,8 @@ def atomic_write(path: Path, content: str) -> None:
             f.write(content)
             f.flush()
             os.fsync(f.fileno())
+        # mkstemp создаёт файл 0600 — вернём обычные права, иначе nginx/хост не прочитают
+        os.chmod(tmp_name, 0o644)
         os.replace(tmp_name, path)
     except BaseException:
         try:
