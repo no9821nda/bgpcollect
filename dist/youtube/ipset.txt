@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: youtube
-# prefixes: 66
-# generated_at: 2026-06-11T15:41:30+00:00
+# prefixes: 63
+# generated_at: 2026-06-12T12:39:56+00:00
 # sources: ripestat-ris(AS×2)
 
 create youtube hash:net family inet hashsize 4096 maxelem 1000000 -exist
@@ -35,10 +35,8 @@ add youtube 50.218.244.0/24 -exist
 add youtube 50.218.248.0/24 -exist
 add youtube 50.218.250.0/23 -exist
 add youtube 50.218.252.0/24 -exist
-add youtube 57.140.193.0/24 -exist
-add youtube 57.140.194.0/24 -exist
 add youtube 57.140.196.0/24 -exist
-add youtube 57.140.198.0/23 -exist
+add youtube 57.140.198.0/24 -exist
 add youtube 57.140.212.0/24 -exist
 add youtube 64.15.112.0/20 -exist
 add youtube 65.19.244.0/23 -exist
@@ -51,8 +49,7 @@ add youtube 136.22.136.0/21 -exist
 add youtube 136.22.144.0/22 -exist
 add youtube 136.22.148.0/23 -exist
 add youtube 136.22.150.0/24 -exist
-add youtube 136.22.152.0/23 -exist
-add youtube 136.22.154.0/24 -exist
+add youtube 136.22.152.0/22 -exist
 add youtube 136.22.157.0/24 -exist
 add youtube 136.22.158.0/24 -exist
 add youtube 152.65.208.0/22 -exist

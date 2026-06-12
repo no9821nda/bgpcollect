@@ -1,5 +1,5 @@
 # bgpcollect — IPv4-сети сервиса: telegram
 # prefixes: 5
-# generated_at: 2026-06-11T15:41:33+00:00
+# generated_at: 2026-06-12T12:39:59+00:00
 # sources: ripestat-ris(AS×5), static
 AllowedIPs = 91.105.192.0/23, 91.108.0.0/16, 95.161.64.0/20, 149.154.160.0/20, 185.76.151.0/24
