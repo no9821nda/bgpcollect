@@ -1,7 +1,7 @@
 # bgpcollect — IPv4-сети сервиса: all
-# prefixes: 201
-# generated_at: 2026-06-12T12:39:59+00:00
-# sources: exclude[ripestat-ris(AS×1), official:google_json], official:google_json, official:whois_asset, ripestat-ris(AS×14), ripestat-ris(AS×2), ripestat-ris(AS×5), static
+# prefixes: 204
+# generated_at: 2026-06-13T09:37:26+00:00
+# sources: exclude[ripestat-ris(AS×1), official:google_json], official:cidr_list, official:google_json, official:whois_asset, ripestat-ris(AS×14), ripestat-ris(AS×2), ripestat-ris(AS×5), static
 
 /ip firewall address-list
 add list=all address=8.8.4.0/24
@@ -69,7 +69,10 @@ add list=all address=89.207.224.0/24
 add list=all address=89.207.228.0/23
 add list=all address=89.207.231.0/24
 add list=all address=91.105.192.0/23
-add list=all address=91.108.0.0/16
+add list=all address=91.108.4.0/22
+add list=all address=91.108.8.0/21
+add list=all address=91.108.16.0/21
+add list=all address=91.108.56.0/22
 add list=all address=95.161.64.0/20
 add list=all address=102.132.96.0/20
 add list=all address=102.132.112.0/24

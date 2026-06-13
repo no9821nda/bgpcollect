@@ -1,7 +1,8 @@
 {
-  "generated_at": "2026-06-12T12:39:59+00:00",
+  "generated_at": "2026-06-13T09:37:25+00:00",
   "sources": [
     "ripestat-ris(AS×5)",
+    "official:cidr_list",
     "static"
   ],
   "asns": [
@@ -11,10 +12,10 @@
     62041,
     211157
   ],
-  "raw_prefix_count": 28,
+  "raw_prefix_count": 48,
   "added": 0,
   "removed": 0,
   "service": "telegram",
-  "prefix_count": 5,
-  "address_count": 74496
+  "prefix_count": 8,
+  "address_count": 15104
 }
