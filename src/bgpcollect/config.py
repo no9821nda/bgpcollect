@@ -10,7 +10,7 @@ import yaml
 
 @dataclass
 class OfficialSource:
-    type: str  # "google_json" | "whois_asset"
+    type: str  # "google_json" | "whois_asset" | "cidr_list"
     url: str | None = None
     server: str | None = None
     query: str | None = None
@@ -78,7 +78,7 @@ def _parse_official(raw: list[dict]) -> list[OfficialSource]:
     sources: list[OfficialSource] = []
     for item in raw or []:
         stype = item.get("type")
-        if stype not in {"google_json", "whois_asset"}:
+        if stype not in {"google_json", "whois_asset", "cidr_list"}:
             raise ValueError(f"Неизвестный type официального источника: {stype!r}")
         sources.append(
             OfficialSource(
