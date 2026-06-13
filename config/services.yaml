@@ -4,7 +4,7 @@
 #   asns:            курируемый seed-список ASN (основной источник истины).
 #   as_sets:         IRR AS-SET для опционального расширения (только как подсказки, см. --expand-as-sets).
 #   official:        официальные/публичные источники для сверки и дополнения.
-#                    type: google_json | whois_asset
+#                    type: google_json | whois_asset | cidr_list
 #   static_prefixes: статически заданные, публично известные диапазоны.
 #
 # ASN ниже — рабочий seed. Перед продакшеном сверить через PeeringDB org_id и bgp.he.net
@@ -47,20 +47,33 @@ services:
   telegram:
     description: Telegram Messenger
     asns: [62041, 62014, 44907, 59930, 211157]
+    official:
+      # Официальный список диапазонов Telegram (IPv4+IPv6; IPv6 отсеется в normalize).
+      - { type: cidr_list, url: "https://core.telegram.org/resources/cidr.txt" }
     static_prefixes:
-      - 91.108.0.0/16
+      # Дублируют официальный cidr.txt — служат явным fallback'ом, если HTTP-загрузка упадёт.
+      # Разбивка по /22 (как у Telegram), а не широкий /16, чтобы не маршрутизировать лишнее.
+      - 91.105.192.0/23
+      - 91.108.4.0/22
+      - 91.108.8.0/22
+      - 91.108.12.0/22
+      - 91.108.16.0/22
+      - 91.108.20.0/22
+      - 91.108.56.0/22
       - 149.154.160.0/20
-      - 95.161.64.0/20
       - 185.76.151.0/24
+      - 95.161.64.0/20    # известный диапазон Telegram, в офиц. cidr.txt отсутствует — оставляем
 
   # Пример СВОЕГО сервиса со своими списками IP. Раскомментируйте и поправьте.
-  # Любой сервис может комбинировать источники: asns / static_prefixes / lists / domains.
+  # Любой сервис может комбинировать источники: asns / official / static_prefixes / lists / domains.
   #
   # custom:
   #   description: Мой список
   #   static_prefixes:               # инлайн (одиночный IP станет /32)
   #     - 203.0.113.0/24
   #     - 198.51.100.7
+  #   official:                      # cidr_list — текстовый список CIDR по HTTP (по одному в строке)
+  #     - { type: cidr_list, url: "https://example.com/ranges.txt" }
   #   lists:                         # файлы со списком CIDR/IP (путь относительно запуска; в Docker — /app)
   #     - lists/custom.txt
   #   domains:                       # резолв доменов в A-записи

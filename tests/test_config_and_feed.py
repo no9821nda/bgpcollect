@@ -33,6 +33,31 @@ def test_load_config_parses(tmp_path):
     assert cfg.services["telegram"].static_prefixes == ["91.108.0.0/16"]
 
 
+def test_load_config_parses_cidr_list(tmp_path):
+    text = """
+services:
+  telegram:
+    asns: [62041]
+    official:
+      - {type: cidr_list, url: "https://core.telegram.org/resources/cidr.txt"}
+"""
+    cfg = load_config(_write(tmp_path, text))
+    src = cfg.services["telegram"].official[0]
+    assert src.type == "cidr_list"
+    assert src.url.endswith("cidr.txt")
+
+
+def test_load_config_rejects_unknown_official_type(tmp_path):
+    text = """
+services:
+  x:
+    official:
+      - {type: bogus_type, url: "https://x/y"}
+"""
+    with pytest.raises(ValueError, match="bogus_type"):
+        load_config(_write(tmp_path, text))
+
+
 def test_load_config_parses_exclude(tmp_path):
     text = """
 services:

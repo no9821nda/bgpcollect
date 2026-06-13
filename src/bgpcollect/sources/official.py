@@ -2,7 +2,10 @@
 
   * google_json  — gstatic goog.json / cloud.json (поле ipv4Prefix);
   * whois_asset  — IRRd-запрос (например `!gAS32934`) к whois.radb.net через сокет
-                   (не требует системного бинаря whois, работает и на Windows).
+                   (не требует системного бинаря whois, работает и на Windows);
+  * cidr_list    — простой текстовый список CIDR/IP по HTTP (по одному в строке,
+                   напр. https://core.telegram.org/resources/cidr.txt). IPv6/мусор
+                   отсеются позже в aggregate.normalize.
 """
 
 from __future__ import annotations
@@ -29,6 +32,24 @@ def fetch_google_json(session: requests.Session, url: str, *, timeout: int = 30)
     ]
     log.info("%s: %d ipv4Prefix", url, len(prefixes))
     return prefixes
+
+
+def fetch_cidr_list(session: requests.Session, url: str, *, timeout: int = 30) -> list[str]:
+    """Достать токены CIDR/IP из простого текстового списка (по одному в строке).
+
+    Срезаем inline-комментарии (`#`), пустые строки; поддерживаем несколько токенов
+    в строке (через пробел или запятую). Валидация — в aggregate.normalize.
+    """
+    resp = session.get(url, timeout=timeout)
+    resp.raise_for_status()
+    tokens: list[str] = []
+    for line in resp.text.splitlines():
+        line = line.split("#", 1)[0].strip()
+        if not line:
+            continue
+        tokens.extend(line.replace(",", " ").split())
+    log.info("%s: %d записей", url, len(tokens))
+    return tokens
 
 
 def _recv_line(sock: socket.socket) -> bytes:
@@ -87,6 +108,8 @@ def fetch_official(session: requests.Session, source: OfficialSource, *, timeout
             return fetch_google_json(session, source.url, timeout=timeout)
         if source.type == "whois_asset":
             return query_irrd(source.server, source.query, timeout=timeout)
+        if source.type == "cidr_list":
+            return fetch_cidr_list(session, source.url, timeout=timeout)
     except (requests.RequestException, OSError, ValueError) as exc:
         log.error("Источник %s упал: %s", source.type, exc)
     return []
