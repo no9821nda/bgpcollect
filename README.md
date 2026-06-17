@@ -63,6 +63,25 @@ bgpcollect feed -i dist/all/ipv4.txt -o feed --asn 65000 --next-hop 192.0.2.1
 | `cisco.txt` | Cisco IOS `ip prefix-list` |
 | `meta.json` | статистика и метаданные запуска |
 
+## Прямые ссылки на списки
+
+Готовые `ipv4.txt` публикуются в `dist/` и доступны напрямую через `raw.githubusercontent.com`
+(ветка `main`):
+
+| Сервис | Прямая ссылка |
+|---|---|
+| Все (all) | https://raw.githubusercontent.com/no9821nda/bgpcollect/main/dist/all/ipv4.txt |
+| Google | https://raw.githubusercontent.com/no9821nda/bgpcollect/main/dist/google/ipv4.txt |
+| Meta | https://raw.githubusercontent.com/no9821nda/bgpcollect/main/dist/meta/ipv4.txt |
+| Telegram | https://raw.githubusercontent.com/no9821nda/bgpcollect/main/dist/telegram/ipv4.txt |
+| YouTube | https://raw.githubusercontent.com/no9821nda/bgpcollect/main/dist/youtube/ipv4.txt |
+
+Формат: `https://raw.githubusercontent.com/no9821nda/bgpcollect/main/dist/<сервис>/ipv4.txt`.
+Другие форматы (`mikrotik.rsc`, `nftables.conf`, `ipset.txt`, …) лежат рядом в той же папке.
+
+> `raw.githubusercontent.com` кэшируется CDN (~5 мин), так что свежие обновления подтянутся
+> с небольшой задержкой.
+
 ## Источники данных
 
 | Источник | Способ | Роль |
