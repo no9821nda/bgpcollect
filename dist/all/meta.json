@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-17T19:03:37+00:00",
+  "generated_at": "2026-06-17T19:05:24+00:00",
   "sources": [
     "exclude[ripestat-ris(AS×1), official:google_json]",
     "official:cidr_list",
@@ -17,11 +17,10 @@
     "meta",
     "telegram",
     "claude",
-    "openai",
-    "gemini"
+    "openai"
   ],
   "stale_services": [],
   "service": "all",
-  "prefix_count": 457,
-  "address_count": 3489568
+  "prefix_count": 464,
+  "address_count": 3483424
 }

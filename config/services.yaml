@@ -87,11 +87,8 @@ services:
       - { type: google_json, url: "https://openai.com/searchbot.json" }
       - { type: google_json, url: "https://openai.com/chatgpt-user.json" }
 
-  gemini:
-    description: Google Gemini / AI Studio (обслуживается из Google AS15169 — подмножество сервиса google)
-    # Своей сети у Gemini нет: generativelanguage.googleapis.com отдаётся с Google-фронтендов (AS15169).
-    # Это даёт ВЕСЬ анонсируемый набор AS15169 и уже входит в `google`/`all`.
-    asns: [15169]
+  # Gemini не выделяем: своей сети нет, обслуживается из Google AS15169 и полностью
+  # перекрывается сервисом `google` — отдельный сервис давал бы дубль в `all`.
 
   # Grok (xAI), DeepSeek, Qwen — собственных анонсируемых сетей НЕ имеют:
   #   - grok/xAI: публичного ASN/списка диапазонов нет;
