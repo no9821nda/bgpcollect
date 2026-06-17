@@ -64,6 +64,51 @@ services:
       - 185.76.151.0/24
       - 95.161.64.0/20    # известный диапазон Telegram, в офиц. cidr.txt отсутствует — оставляем
 
+  # --- AI-сервисы ---
+  # Важно: у большинства LLM-провайдеров НЕТ собственных анонсируемых сетей — сервис крутится
+  # на AWS/Azure/GCP, поэтому «своей сети» в смысле отдельного ASN не существует. Ниже добавлены
+  # только те, у кого есть собственный ASN или официальный публичный список диапазонов.
+
+  claude:
+    description: Anthropic / Claude (api.anthropic.com, claude.ai; собственный AS399358)
+    # AS400243 (ANTHROPIC-2) / AS401551 (ANTHROPIC-3) зарегистрированы, но трафик не несут — не добавляем.
+    asns: [399358]
+    static_prefixes:
+      # Официальный диапазон Anthropic (вход 160.79.104.0/23 ⊂ исход 160.79.104.0/21).
+      # https://platform.claude.com/docs/en/api/ip-addresses
+      - 160.79.104.0/21
+
+  openai:
+    description: OpenAI / ChatGPT (официальные диапазоны ботов; сам API/чат живёт на Azure)
+    official:
+      # JSON по формату идентичен goog.json ("prefixes":[{"ipv4Prefix":...}]) — парсер google_json подходит.
+      # Это egress-диапазоны ботов OpenAI (публично документированы); ingress API — на Azure, отдельного списка нет.
+      - { type: google_json, url: "https://openai.com/gptbot.json" }
+      - { type: google_json, url: "https://openai.com/searchbot.json" }
+      - { type: google_json, url: "https://openai.com/chatgpt-user.json" }
+
+  gemini:
+    description: Google Gemini / AI Studio (обслуживается из Google AS15169 — подмножество сервиса google)
+    # Своей сети у Gemini нет: generativelanguage.googleapis.com отдаётся с Google-фронтендов (AS15169).
+    # Это даёт ВЕСЬ анонсируемый набор AS15169 и уже входит в `google`/`all`.
+    asns: [15169]
+
+  # Grok (xAI), DeepSeek, Qwen — собственных анонсируемых сетей НЕ имеют:
+  #   - grok/xAI: публичного ASN/списка диапазонов нет;
+  #   - deepseek: резолвится в общие China Telecom (AS4808) / China Unicom (AS4134) — анонсировать их нельзя;
+  #   - qwen: общий Alibaba Cloud (AS45102, ~весь Alibaba) — анонсировать целиком нет смысла.
+  # При необходимости можно собирать их best-effort резолвом доменов (нестабильно, несколько CDN-IP):
+  #
+  # grok:
+  #   description: xAI Grok (best-effort через резолв доменов; своей сети нет)
+  #   domains: [grok.com, api.x.ai, x.ai]
+  # deepseek:
+  #   description: DeepSeek (best-effort через резолв доменов; своей сети нет)
+  #   domains: [deepseek.com, chat.deepseek.com, api.deepseek.com]
+  # qwen:
+  #   description: Alibaba Qwen (best-effort через резолв доменов; своей сети нет)
+  #   domains: [chat.qwen.ai, qwen.ai, dashscope.aliyuncs.com]
+
   # Пример СВОЕГО сервиса со своими списками IP. Раскомментируйте и поправьте.
   # Любой сервис может комбинировать источники: asns / official / static_prefixes / lists / domains.
   #

@@ -1,6 +1,6 @@
 # bgpcollect
 
-Сбор IPv4-сетей сервисов (**Google, YouTube, Meta, Telegram**) из публичных данных о
+Сбор IPv4-сетей сервисов (**Google, YouTube, Meta, Telegram, Claude, OpenAI, Gemini**) из публичных данных о
 маршрутизации и официальных списков, агрегация и публикация в виде готовых списков и живого
 BGP-фида — по образцу [antifilter.download/#bgp_page](https://antifilter.download/#bgp_page).
 
@@ -75,6 +75,9 @@ bgpcollect feed -i dist/all/ipv4.txt -o feed --asn 65000 --next-hop 192.0.2.1
 | Meta | https://raw.githubusercontent.com/no9821nda/bgpcollect/main/dist/meta/ipv4.txt |
 | Telegram | https://raw.githubusercontent.com/no9821nda/bgpcollect/main/dist/telegram/ipv4.txt |
 | YouTube | https://raw.githubusercontent.com/no9821nda/bgpcollect/main/dist/youtube/ipv4.txt |
+| Claude | https://raw.githubusercontent.com/no9821nda/bgpcollect/main/dist/claude/ipv4.txt |
+| OpenAI | https://raw.githubusercontent.com/no9821nda/bgpcollect/main/dist/openai/ipv4.txt |
+| Gemini | https://raw.githubusercontent.com/no9821nda/bgpcollect/main/dist/gemini/ipv4.txt |
 
 Формат: `https://raw.githubusercontent.com/no9821nda/bgpcollect/main/dist/<сервис>/ipv4.txt`.
 Другие форматы (`mikrotik.rsc`, `nftables.conf`, `ipset.txt`, …) лежат рядом в той же папке.
