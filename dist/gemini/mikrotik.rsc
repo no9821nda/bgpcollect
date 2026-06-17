@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: gemini
 # prefixes: 58
-# generated_at: 2026-06-17T19:01:47+00:00
+# generated_at: 2026-06-17T19:03:37+00:00
 # sources: ripestat-ris(AS×1)
 
 /ip firewall address-list

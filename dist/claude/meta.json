@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-17T19:01:42+00:00",
+  "generated_at": "2026-06-17T19:03:35+00:00",
   "sources": [
     "ripestat-ris(AS×1)",
     "static"
@@ -8,7 +8,7 @@
     399358
   ],
   "raw_prefix_count": 4,
-  "added": 1,
+  "added": 0,
   "removed": 0,
   "service": "claude",
   "prefix_count": 1,

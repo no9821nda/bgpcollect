@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-17T19:01:47+00:00",
+  "generated_at": "2026-06-17T19:03:37+00:00",
   "sources": [
     "ripestat-ris(AS×1)"
   ],
@@ -7,7 +7,7 @@
     15169
   ],
   "raw_prefix_count": 1396,
-  "added": 58,
+  "added": 0,
   "removed": 0,
   "service": "gemini",
   "prefix_count": 58,
