@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: claude
 # prefixes: 1
-# generated_at: 2026-06-20T10:20:36+00:00
+# generated_at: 2026-06-20T17:09:00+00:00
 # sources: ripestat-ris(AS×1), static
 
 create claude hash:net family inet hashsize 4096 maxelem 1000000 -exist
