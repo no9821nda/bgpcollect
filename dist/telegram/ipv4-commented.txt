@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: telegram
 # prefixes: 8
-# generated_at: 2026-06-20T17:08:59+00:00
+# generated_at: 2026-06-21T11:33:19+00:00
 # sources: ripestat-ris(AS×5), official:cidr_list, static
 91.105.192.0/23
 91.108.4.0/22
