@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: meta
 # prefixes: 35
-# generated_at: 2026-06-23T03:28:57+00:00
+# generated_at: 2026-06-23T14:47:02+00:00
 # sources: ripestat-ris(AS×5), official:whois_asset
 
 create meta hash:net family inet hashsize 4096 maxelem 1000000 -exist
