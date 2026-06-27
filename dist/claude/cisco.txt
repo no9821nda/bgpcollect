@@ -1,6 +1,6 @@
 ! bgpcollect — IPv4-сети сервиса: claude
 ! prefixes: 1
-! generated_at: 2026-06-26T14:22:43+00:00
+! generated_at: 2026-06-27T02:58:16+00:00
 ! sources: ripestat-ris(AS×1), static
 
 ip prefix-list claude permit 160.79.104.0/21
