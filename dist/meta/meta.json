@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-30T14:16:34+00:00",
+  "generated_at": "2026-07-01T03:43:15+00:00",
   "sources": [
     "ripestat-ris(AS×5)",
     "official:whois_asset"
@@ -11,7 +11,7 @@
     149642,
     149769
   ],
-  "raw_prefix_count": 1169,
+  "raw_prefix_count": 1170,
   "added": 0,
   "removed": 0,
   "service": "meta",
