@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-05T02:58:30+00:00",
+  "generated_at": "2026-07-05T13:28:48+00:00",
   "sources": [
     "ripestat-ris(AS×2)"
   ],
@@ -7,10 +7,10 @@
     36040,
     43515
   ],
-  "raw_prefix_count": 373,
-  "added": 0,
+  "raw_prefix_count": 374,
+  "added": 1,
   "removed": 0,
   "service": "youtube",
-  "prefix_count": 61,
-  "address_count": 1846528
+  "prefix_count": 62,
+  "address_count": 1847552
 }
