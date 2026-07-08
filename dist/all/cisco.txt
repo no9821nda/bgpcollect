@@ -1,6 +1,6 @@
 ! bgpcollect — IPv4-сети сервиса: all
 ! prefixes: 464
-! generated_at: 2026-07-07T14:30:57+00:00
+! generated_at: 2026-07-08T02:35:52+00:00
 ! sources: exclude[ripestat-ris(AS×1), official:google_json], official:cidr_list, official:google_json, official:whois_asset, ripestat-ris(AS×1), ripestat-ris(AS×14), ripestat-ris(AS×2), ripestat-ris(AS×5), static
 
 ip prefix-list all permit 4.151.71.176/28
@@ -26,6 +26,7 @@ ip prefix-list all permit 9.129.0.0/17
 ip prefix-list all permit 9.160.163.224/28
 ip prefix-list all permit 9.160.164.128/28
 ip prefix-list all permit 9.234.96.192/28
+ip prefix-list all permit 9.235.40.32/28
 ip prefix-list all permit 13.65.138.96/27
 ip prefix-list all permit 13.67.72.16/28
 ip prefix-list all permit 13.70.107.160/28
@@ -35,7 +36,6 @@ ip prefix-list all permit 13.76.115.224/27
 ip prefix-list all permit 13.76.116.80/28
 ip prefix-list all permit 13.83.167.128/28
 ip prefix-list all permit 13.83.237.176/28
-ip prefix-list all permit 20.0.53.96/28
 ip prefix-list all permit 20.14.99.96/28
 ip prefix-list all permit 20.17.108.96/28
 ip prefix-list all permit 20.25.151.224/28
@@ -361,6 +361,7 @@ ip prefix-list all permit 137.135.191.176/28
 ip prefix-list all permit 138.91.30.48/28
 ip prefix-list all permit 138.91.46.96/28
 ip prefix-list all permit 142.250.0.0/15
+ip prefix-list all permit 145.133.0.176/28
 ip prefix-list all permit 147.75.208.0/20
 ip prefix-list all permit 149.154.160.0/20
 ip prefix-list all permit 152.65.208.0/22
@@ -405,7 +406,6 @@ ip prefix-list all permit 172.204.16.64/28
 ip prefix-list all permit 172.204.27.16/28
 ip prefix-list all permit 172.212.159.64/28
 ip prefix-list all permit 172.212.172.160/28
-ip prefix-list all permit 172.213.11.144/28
 ip prefix-list all permit 172.213.21.16/28
 ip prefix-list all permit 172.215.215.32/28
 ip prefix-list all permit 172.215.218.96/28
