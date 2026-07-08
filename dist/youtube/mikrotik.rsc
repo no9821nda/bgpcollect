@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: youtube
 # prefixes: 62
-# generated_at: 2026-07-08T02:35:49+00:00
+# generated_at: 2026-07-08T14:02:23+00:00
 # sources: ripestat-ris(AS×2)
 
 /ip firewall address-list
