@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: openai
-# prefixes: 275
-# generated_at: 2026-07-14T13:40:17+00:00
+# prefixes: 274
+# generated_at: 2026-07-15T02:22:12+00:00
 # sources: official:google_json, official:google_json, official:google_json
 
 /ip firewall address-list
@@ -17,7 +17,7 @@ add list=openai address=4.197.64.48/28
 add list=openai address=4.197.64.64/28
 add list=openai address=4.197.115.112/28
 add list=openai address=4.198.72.16/28
-add list=openai address=4.201.232.64/28
+add list=openai address=4.201.232.64/27
 add list=openai address=4.205.128.176/28
 add list=openai address=4.226.226.32/28
 add list=openai address=4.227.36.0/25
@@ -87,7 +87,6 @@ add list=openai address=20.198.67.96/28
 add list=openai address=20.199.211.160/28
 add list=openai address=20.203.245.32/28
 add list=openai address=20.204.24.240/28
-add list=openai address=20.206.107.192/28
 add list=openai address=20.210.154.128/28
 add list=openai address=20.210.174.208/28
 add list=openai address=20.210.211.192/28
@@ -119,6 +118,7 @@ add list=openai address=23.102.141.32/28
 add list=openai address=40.67.175.0/25
 add list=openai address=40.67.183.160/27
 add list=openai address=40.75.14.224/28
+add list=openai address=40.78.161.48/28
 add list=openai address=40.81.134.128/27
 add list=openai address=40.81.234.144/28
 add list=openai address=40.84.181.32/28
@@ -136,6 +136,7 @@ add list=openai address=51.8.155.64/27
 add list=openai address=51.56.40.80/28
 add list=openai address=51.57.0.96/28
 add list=openai address=51.59.24.64/27
+add list=openai address=51.59.40.80/28
 add list=openai address=51.59.48.80/28
 add list=openai address=51.59.48.96/28
 add list=openai address=51.107.70.192/28
@@ -152,7 +153,6 @@ add list=openai address=52.165.212.16/28
 add list=openai address=52.165.212.32/27
 add list=openai address=52.172.129.160/28
 add list=openai address=52.172.251.112/28
-add list=openai address=52.173.123.0/28
 add list=openai address=52.173.219.96/27
 add list=openai address=52.173.221.16/28
 add list=openai address=52.173.221.176/28
@@ -269,7 +269,6 @@ add list=openai address=172.215.215.32/28
 add list=openai address=172.215.218.96/28
 add list=openai address=191.233.1.112/28
 add list=openai address=191.233.1.128/28
-add list=openai address=191.233.1.224/28
 add list=openai address=191.233.2.0/28
 add list=openai address=191.233.194.32/28
 add list=openai address=191.233.196.112/28
