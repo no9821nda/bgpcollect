@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: all
 # prefixes: 477
-# generated_at: 2026-07-16T02:29:38+00:00
+# generated_at: 2026-07-16T13:47:22+00:00
 # sources: exclude[ripestat-ris(AS×1), official:google_json], official:cidr_list, official:google_json, official:whois_asset, ripestat-ris(AS×1), ripestat-ris(AS×14), ripestat-ris(AS×2), ripestat-ris(AS×5), static
 4.151.71.176/28
 4.151.119.48/28
@@ -27,6 +27,7 @@
 9.160.164.128/28
 9.234.96.192/28
 9.234.97.96/28
+9.234.97.128/28
 9.235.40.32/28
 13.65.138.96/27
 13.67.72.16/28
@@ -196,7 +197,6 @@
 52.173.234.16/28
 52.173.234.80/28
 52.173.235.80/28
-52.176.139.176/28
 52.187.246.128/28
 52.190.137.16/28
 52.190.137.144/28
