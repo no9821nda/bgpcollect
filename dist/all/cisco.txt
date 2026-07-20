@@ -1,6 +1,6 @@
 ! bgpcollect — IPv4-сети сервиса: all
-! prefixes: 495
-! generated_at: 2026-07-19T13:14:52+00:00
+! prefixes: 496
+! generated_at: 2026-07-20T02:50:04+00:00
 ! sources: exclude[ripestat-ris(AS×1), official:google_json], official:cidr_list, official:google_json, official:whois_asset, ripestat-ris(AS×1), ripestat-ris(AS×14), ripestat-ris(AS×2), ripestat-ris(AS×5), static
 
 ip prefix-list all permit 4.151.71.176/28
@@ -378,6 +378,7 @@ ip prefix-list all permit 136.23.20.0/24
 ip prefix-list all permit 136.23.26.0/23
 ip prefix-list all permit 136.23.33.0/24
 ip prefix-list all permit 136.23.34.0/23
+ip prefix-list all permit 136.23.39.0/24
 ip prefix-list all permit 136.23.48.0/20
 ip prefix-list all permit 136.121.4.0/24
 ip prefix-list all permit 136.121.32.0/21
