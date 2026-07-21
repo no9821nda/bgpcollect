@@ -1,6 +1,6 @@
 ! bgpcollect — IPv4-сети сервиса: youtube
-! prefixes: 62
-! generated_at: 2026-07-20T14:03:04+00:00
+! prefixes: 61
+! generated_at: 2026-07-21T02:33:22+00:00
 ! sources: ripestat-ris(AS×2)
 
 ip prefix-list youtube permit 34.0.0.0/15
@@ -39,7 +39,6 @@ ip prefix-list youtube permit 57.140.198.0/24
 ip prefix-list youtube permit 57.140.212.0/24
 ip prefix-list youtube permit 64.15.112.0/20
 ip prefix-list youtube permit 65.19.244.0/23
-ip prefix-list youtube permit 102.217.64.0/22
 ip prefix-list youtube permit 104.237.160.0/19
 ip prefix-list youtube permit 107.181.0.0/20
 ip prefix-list youtube permit 136.22.128.0/23

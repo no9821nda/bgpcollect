@@ -1,6 +1,6 @@
 ! bgpcollect — IPv4-сети сервиса: openai
 ! prefixes: 290
-! generated_at: 2026-07-20T14:03:09+00:00
+! generated_at: 2026-07-21T02:33:25+00:00
 ! sources: official:google_json, official:google_json, official:google_json
 
 ip prefix-list openai permit 4.151.71.176/28
@@ -204,13 +204,13 @@ ip prefix-list openai permit 57.154.187.32/28
 ip prefix-list openai permit 68.154.28.96/28
 ip prefix-list openai permit 68.218.30.112/28
 ip prefix-list openai permit 68.220.57.64/28
-ip prefix-list openai permit 68.221.67.160/28
 ip prefix-list openai permit 68.221.67.192/28
 ip prefix-list openai permit 68.221.67.224/27
-ip prefix-list openai permit 68.221.75.16/28
 ip prefix-list openai permit 70.153.76.16/28
 ip prefix-list openai permit 70.153.189.192/28
 ip prefix-list openai permit 70.153.190.16/28
+ip prefix-list openai permit 70.156.144.64/28
+ip prefix-list openai permit 70.156.152.80/28
 ip prefix-list openai permit 74.7.35.48/28
 ip prefix-list openai permit 74.7.35.112/28
 ip prefix-list openai permit 74.7.36.64/27
