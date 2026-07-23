@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: openai
 # prefixes: 290
-# generated_at: 2026-07-22T13:50:03+00:00
+# generated_at: 2026-07-23T02:37:03+00:00
 # sources: official:google_json, official:google_json, official:google_json
 
 create openai hash:net family inet hashsize 4096 maxelem 1000000 -exist
@@ -17,6 +17,7 @@ add openai 4.197.64.48/28 -exist
 add openai 4.197.64.64/28 -exist
 add openai 4.197.115.112/28 -exist
 add openai 4.198.72.16/28 -exist
+add openai 4.198.96.112/28 -exist
 add openai 4.201.232.64/27 -exist
 add openai 4.203.96.80/28 -exist
 add openai 4.205.128.176/28 -exist
@@ -46,7 +47,6 @@ add openai 20.17.108.96/28 -exist
 add openai 20.25.151.224/28 -exist
 add openai 20.27.94.128/28 -exist
 add openai 20.42.10.176/28 -exist
-add openai 20.42.250.32/28 -exist
 add openai 20.45.178.144/28 -exist
 add openai 20.52.125.160/28 -exist
 add openai 20.55.129.0/28 -exist
