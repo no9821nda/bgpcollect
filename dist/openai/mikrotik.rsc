@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: openai
 # prefixes: 290
-# generated_at: 2026-07-29T02:32:06+00:00
+# generated_at: 2026-07-29T14:07:03+00:00
 # sources: official:google_json, official:google_json, official:google_json
 
 /ip firewall address-list
