@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: all
-# prefixes: 509
-# generated_at: 2026-07-30T02:12:54+00:00
+# prefixes: 546
+# generated_at: 2026-07-30T13:57:27+00:00
 # sources: exclude[ripestat-ris(AS×1), official:google_json], official:cidr_list, official:google_json, official:whois_asset, ripestat-ris(AS×1), ripestat-ris(AS×14), ripestat-ris(AS×2), ripestat-ris(AS×5), static
 
 /ip firewall address-list
@@ -21,6 +21,7 @@ add list=all address=4.198.96.112/28
 add list=all address=4.201.232.64/27
 add list=all address=4.203.96.80/28
 add list=all address=4.205.128.176/28
+add list=all address=4.218.24.64/28
 add list=all address=4.226.200.16/28
 add list=all address=4.226.226.32/28
 add list=all address=4.227.36.0/25
@@ -28,9 +29,17 @@ add list=all address=8.8.4.0/24
 add list=all address=8.8.8.0/24
 add list=all address=9.129.0.0/17
 add list=all address=9.160.34.144/28
+add list=all address=9.160.36.16/28
+add list=all address=9.160.96.16/28
 add list=all address=9.160.128.16/28
 add list=all address=9.160.128.32/28
+add list=all address=9.160.128.64/28
+add list=all address=9.160.163.128/28
 add list=all address=9.160.164.128/28
+add list=all address=9.163.101.48/28
+add list=all address=9.205.8.48/28
+add list=all address=9.205.25.128/28
+add list=all address=9.223.181.208/28
 add list=all address=9.234.96.192/28
 add list=all address=9.234.97.96/28
 add list=all address=9.234.97.128/28
@@ -50,15 +59,19 @@ add list=all address=20.25.151.224/28
 add list=all address=20.27.94.128/28
 add list=all address=20.42.10.176/28
 add list=all address=20.45.178.144/28
+add list=all address=20.48.120.208/28
 add list=all address=20.52.125.160/28
 add list=all address=20.55.129.0/28
 add list=all address=20.55.229.144/28
 add list=all address=20.57.199.192/28
+add list=all address=20.63.180.96/28
 add list=all address=20.63.221.64/28
 add list=all address=20.79.59.112/28
+add list=all address=20.81.183.64/28
 add list=all address=20.83.243.176/28
 add list=all address=20.97.189.96/28
 add list=all address=20.102.212.144/28
+add list=all address=20.113.211.112/28
 add list=all address=20.113.225.112/28
 add list=all address=20.125.66.80/28
 add list=all address=20.125.112.224/28
@@ -82,7 +95,7 @@ add list=all address=20.169.86.224/27
 add list=all address=20.169.87.112/28
 add list=all address=20.170.184.16/28
 add list=all address=20.170.184.32/27
-add list=all address=20.170.184.64/28
+add list=all address=20.170.184.64/27
 add list=all address=20.171.53.224/28
 add list=all address=20.171.123.64/28
 add list=all address=20.171.206.0/23
@@ -94,6 +107,7 @@ add list=all address=20.194.1.0/28
 add list=all address=20.198.67.96/28
 add list=all address=20.199.211.160/28
 add list=all address=20.199.242.0/28
+add list=all address=20.200.212.240/28
 add list=all address=20.204.24.240/28
 add list=all address=20.210.154.128/28
 add list=all address=20.210.174.208/28
@@ -108,6 +122,8 @@ add list=all address=20.215.220.64/26
 add list=all address=20.215.220.128/26
 add list=all address=20.215.220.192/27
 add list=all address=20.218.30.240/28
+add list=all address=20.219.71.192/28
+add list=all address=20.222.36.192/28
 add list=all address=20.226.32.80/28
 add list=all address=20.227.140.32/28
 add list=all address=20.228.106.176/28
@@ -145,8 +161,8 @@ add list=all address=35.208.0.0/13
 add list=all address=35.216.0.0/14
 add list=all address=40.67.175.0/25
 add list=all address=40.67.183.160/27
-add list=all address=40.75.14.224/28
 add list=all address=40.78.161.48/28
+add list=all address=40.81.67.96/28
 add list=all address=40.81.134.128/27
 add list=all address=40.81.234.144/28
 add list=all address=40.84.181.32/28
@@ -179,6 +195,8 @@ add list=all address=50.218.252.0/24
 add list=all address=51.8.102.0/24
 add list=all address=51.8.155.48/28
 add list=all address=51.8.155.64/27
+add list=all address=51.8.155.112/28
+add list=all address=51.8.187.224/28
 add list=all address=51.56.40.80/28
 add list=all address=51.57.0.96/28
 add list=all address=51.59.24.64/27
@@ -265,10 +283,13 @@ add list=all address=69.63.176.0/20
 add list=all address=69.171.224.0/19
 add list=all address=70.32.128.0/19
 add list=all address=70.153.76.16/28
+add list=all address=70.153.87.224/28
+add list=all address=70.153.139.208/28
 add list=all address=70.153.189.192/28
 add list=all address=70.153.190.16/28
 add list=all address=70.156.144.64/28
 add list=all address=70.156.152.80/28
+add list=all address=70.156.152.96/28
 add list=all address=72.14.192.0/18
 add list=all address=74.7.35.48/28
 add list=all address=74.7.35.112/28
@@ -285,6 +306,7 @@ add list=all address=74.114.24.0/21
 add list=all address=74.119.76.0/22
 add list=all address=74.125.0.0/16
 add list=all address=74.161.200.96/28
+add list=all address=74.224.217.64/28
 add list=all address=74.226.253.160/28
 add list=all address=74.249.86.176/28
 add list=all address=85.211.241.128/28
@@ -297,6 +319,7 @@ add list=all address=91.108.8.0/21
 add list=all address=91.108.16.0/21
 add list=all address=91.108.56.0/22
 add list=all address=95.161.64.0/20
+add list=all address=102.66.249.0/24
 add list=all address=102.132.96.0/20
 add list=all address=102.132.112.0/24
 add list=all address=102.132.115.0/24
@@ -317,6 +340,7 @@ add list=all address=104.133.144.0/20
 add list=all address=104.133.160.0/19
 add list=all address=104.133.192.0/18
 add list=all address=104.134.0.0/15
+add list=all address=104.208.184.192/27
 add list=all address=104.210.139.192/28
 add list=all address=104.210.139.224/28
 add list=all address=104.210.140.128/28
@@ -343,8 +367,10 @@ add list=all address=128.177.134.0/24
 add list=all address=129.134.0.0/16
 add list=all address=132.196.82.48/28
 add list=all address=132.196.86.0/24
+add list=all address=134.149.233.80/28
+add list=all address=135.13.64.240/28
+add list=all address=135.116.136.160/28
 add list=all address=135.119.134.128/28
-add list=all address=135.119.134.192/28
 add list=all address=135.220.73.208/28
 add list=all address=135.220.73.240/28
 add list=all address=135.234.64.0/24
@@ -400,6 +426,7 @@ add list=all address=137.135.191.176/28
 add list=all address=138.91.30.48/28
 add list=all address=138.91.46.96/28
 add list=all address=142.250.0.0/15
+add list=all address=145.132.1.32/28
 add list=all address=145.132.136.96/28
 add list=all address=145.133.0.176/28
 add list=all address=147.75.208.0/20
@@ -410,6 +437,7 @@ add list=all address=152.65.218.0/23
 add list=all address=152.65.222.0/23
 add list=all address=152.65.224.0/19
 add list=all address=157.240.0.0/16
+add list=all address=158.158.5.32/28
 add list=all address=160.79.104.0/21
 add list=all address=162.120.128.0/17
 add list=all address=163.70.128.0/17
@@ -444,13 +472,22 @@ add list=all address=172.182.214.0/23
 add list=all address=172.182.224.0/28
 add list=all address=172.183.143.224/28
 add list=all address=172.183.222.128/28
+add list=all address=172.192.88.192/28
 add list=all address=172.192.97.32/28
+add list=all address=172.192.112.208/28
+add list=all address=172.197.160.192/28
+add list=all address=172.197.161.208/28
 add list=all address=172.197.170.80/28
 add list=all address=172.197.203.16/28
+add list=all address=172.199.137.80/28
 add list=all address=172.202.102.112/28
 add list=all address=172.203.190.128/28
 add list=all address=172.204.27.16/28
+add list=all address=172.204.28.224/28
 add list=all address=172.204.96.32/27
+add list=all address=172.204.96.80/28
+add list=all address=172.205.189.192/28
+add list=all address=172.207.1.32/28
 add list=all address=172.208.128.32/27
 add list=all address=172.212.159.64/28
 add list=all address=172.212.172.160/28
