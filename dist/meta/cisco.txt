@@ -1,6 +1,6 @@
 ! bgpcollect — IPv4-сети сервиса: meta
-! prefixes: 35
-! generated_at: 2026-08-03T14:35:33+00:00
+! prefixes: 34
+! generated_at: 2026-08-04T02:24:53+00:00
 ! sources: ripestat-ris(AS×5), official:whois_asset
 
 ip prefix-list meta permit 31.13.24.0/21
@@ -35,6 +35,5 @@ ip prefix-list meta permit 173.252.64.0/18
 ip prefix-list meta permit 179.60.192.0/22
 ip prefix-list meta permit 185.60.216.0/22
 ip prefix-list meta permit 185.89.216.0/22
-ip prefix-list meta permit 189.247.71.0/24
 ip prefix-list meta permit 199.201.64.0/22
 ip prefix-list meta permit 204.15.20.0/22
