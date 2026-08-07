@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: openai
 # prefixes: 280
-# generated_at: 2026-08-07T02:35:27+00:00
+# generated_at: 2026-08-07T12:59:26+00:00
 # sources: official:google_json, official:google_json, official:google_json
 
 /ip firewall address-list
@@ -193,10 +193,10 @@ add list=openai address=68.154.28.96/28
 add list=openai address=68.218.30.112/28
 add list=openai address=68.220.57.64/28
 add list=openai address=70.153.32.16/28
+add list=openai address=70.153.32.32/28
 add list=openai address=70.153.76.16/28
 add list=openai address=70.153.87.224/28
 add list=openai address=70.153.189.192/28
-add list=openai address=70.153.190.16/28
 add list=openai address=70.156.152.96/28
 add list=openai address=74.7.35.48/28
 add list=openai address=74.7.35.112/28
@@ -213,6 +213,8 @@ add list=openai address=74.161.200.96/28
 add list=openai address=74.224.217.64/28
 add list=openai address=74.226.253.160/28
 add list=openai address=74.249.86.176/28
+add list=openai address=85.211.128.16/28
+add list=openai address=85.211.128.32/28
 add list=openai address=85.211.241.128/28
 add list=openai address=104.208.184.192/28
 add list=openai address=104.210.139.192/28
@@ -262,8 +264,6 @@ add list=openai address=172.183.143.224/28
 add list=openai address=172.183.222.128/28
 add list=openai address=172.192.112.208/28
 add list=openai address=172.197.160.192/28
-add list=openai address=172.197.161.208/28
-add list=openai address=172.197.170.80/28
 add list=openai address=172.197.203.16/28
 add list=openai address=172.199.137.80/28
 add list=openai address=172.203.190.128/28
