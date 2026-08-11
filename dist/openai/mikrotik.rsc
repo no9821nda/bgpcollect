@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: openai
-# prefixes: 280
-# generated_at: 2026-08-10T13:04:37+00:00
+# prefixes: 279
+# generated_at: 2026-08-11T01:38:03+00:00
 # sources: official:google_json, official:google_json, official:google_json
 
 /ip firewall address-list
@@ -17,7 +17,7 @@ add list=openai address=4.197.64.64/28
 add list=openai address=4.197.115.112/28
 add list=openai address=4.198.72.16/28
 add list=openai address=4.198.96.112/28
-add list=openai address=4.201.232.64/27
+add list=openai address=4.201.232.64/28
 add list=openai address=4.205.128.176/28
 add list=openai address=4.218.24.64/28
 add list=openai address=4.226.200.16/28
@@ -277,7 +277,6 @@ add list=openai address=172.212.159.64/28
 add list=openai address=172.212.172.160/28
 add list=openai address=172.215.215.32/28
 add list=openai address=172.215.218.96/28
-add list=openai address=191.233.1.112/28
 add list=openai address=191.233.196.112/28
 add list=openai address=191.233.199.160/28
 add list=openai address=191.235.66.16/28
