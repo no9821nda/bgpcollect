@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: all
-# prefixes: 499
-# generated_at: 2026-08-11T01:38:03+00:00
+# prefixes: 498
+# generated_at: 2026-08-11T13:00:28+00:00
 # sources: exclude[ripestat-ris(AS×1), official:google_json], official:cidr_list, official:google_json, official:whois_asset, ripestat-ris(AS×1), ripestat-ris(AS×14), ripestat-ris(AS×2), ripestat-ris(AS×5), static
 
 create all hash:net family inet hashsize 4096 maxelem 1000000 -exist
@@ -491,7 +491,6 @@ add all 206.71.253.0/24 -exist
 add all 207.223.160.0/20 -exist
 add all 208.65.152.0/22 -exist
 add all 208.68.108.0/22 -exist
-add all 208.76.215.0/24 -exist
 add all 208.104.202.0/24 -exist
 add all 208.117.224.0/19 -exist
 add all 209.85.128.0/17 -exist
