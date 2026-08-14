@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-14T01:49:27+00:00",
+  "generated_at": "2026-08-14T13:02:27+00:00",
   "sources": [
     "official:google_json",
     "official:google_json",
@@ -8,7 +8,7 @@
   "asns": [],
   "raw_prefix_count": 265,
   "added": 0,
-  "removed": 16,
+  "removed": 0,
   "service": "openai",
   "prefix_count": 238,
   "address_count": 41296
