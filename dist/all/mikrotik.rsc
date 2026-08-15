@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: all
-# prefixes: 456
-# generated_at: 2026-08-14T13:02:27+00:00
+# prefixes: 451
+# generated_at: 2026-08-15T01:07:51+00:00
 # sources: exclude[ripestat-ris(AS×1), official:google_json], official:cidr_list, official:google_json, official:whois_asset, ripestat-ris(AS×1), ripestat-ris(AS×14), ripestat-ris(AS×2), ripestat-ris(AS×5), static
 
 /ip firewall address-list
@@ -62,7 +62,6 @@ add list=all address=20.125.112.224/28
 add list=all address=20.125.144.144/28
 add list=all address=20.161.75.208/28
 add list=all address=20.168.7.192/28
-add list=all address=20.168.7.240/28
 add list=all address=20.168.18.32/28
 add list=all address=20.169.6.224/28
 add list=all address=20.169.7.48/28
@@ -71,7 +70,6 @@ add list=all address=20.169.73.64/28
 add list=all address=20.169.77.0/25
 add list=all address=20.169.78.48/28
 add list=all address=20.169.78.64/28
-add list=all address=20.169.78.112/28
 add list=all address=20.169.78.128/28
 add list=all address=20.169.78.160/28
 add list=all address=20.169.78.192/28
@@ -94,7 +92,6 @@ add list=all address=20.215.219.208/28
 add list=all address=20.218.30.240/28
 add list=all address=20.219.71.192/28
 add list=all address=20.222.36.192/28
-add list=all address=20.226.32.80/28
 add list=all address=20.227.140.32/28
 add list=all address=20.228.106.176/28
 add list=all address=20.235.87.224/28
@@ -158,10 +155,8 @@ add list=all address=50.218.252.0/24
 add list=all address=51.8.102.0/24
 add list=all address=51.8.155.48/28
 add list=all address=51.8.155.112/28
-add list=all address=51.56.40.80/28
 add list=all address=51.57.0.96/28
 add list=all address=51.59.24.64/27
-add list=all address=51.59.40.80/28
 add list=all address=51.59.48.80/28
 add list=all address=51.116.2.80/28
 add list=all address=51.116.221.96/28
