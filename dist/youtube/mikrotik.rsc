@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: youtube
-# prefixes: 60
-# generated_at: 2026-08-16T01:12:29+00:00
+# prefixes: 59
+# generated_at: 2026-08-16T12:35:16+00:00
 # sources: ripestat-ris(AS×2)
 
 /ip firewall address-list
@@ -41,7 +41,6 @@ add list=youtube address=57.140.212.0/24
 add list=youtube address=64.15.112.0/20
 add list=youtube address=65.19.244.0/23
 add list=youtube address=104.237.160.0/19
-add list=youtube address=107.181.0.0/20
 add list=youtube address=136.22.128.0/23
 add list=youtube address=136.22.130.0/24
 add list=youtube address=136.22.132.0/22
