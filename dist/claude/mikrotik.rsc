@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: claude
 # prefixes: 1
-# generated_at: 2026-08-17T01:09:33+00:00
+# generated_at: 2026-08-17T12:40:11+00:00
 # sources: ripestat-ris(AS×1), static
 
 /ip firewall address-list
