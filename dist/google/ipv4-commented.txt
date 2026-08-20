@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: google
-# prefixes: 190
-# generated_at: 2026-08-20T01:07:32+00:00
+# prefixes: 189
+# generated_at: 2026-08-20T12:45:02+00:00
 # sources: ripestat-ris(AS×14), official:google_json, exclude[ripestat-ris(AS×1), official:google_json]
 8.8.4.0/24
 8.8.8.0/24
@@ -143,8 +143,7 @@
 136.23.39.0/24
 136.23.48.0/20
 136.121.4.0/24
-136.121.32.0/24
-136.121.36.0/22
+136.121.32.0/21
 142.250.0.0/15
 152.65.208.0/22
 152.65.214.0/23
