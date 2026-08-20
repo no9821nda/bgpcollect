@@ -1,6 +1,6 @@
 ! bgpcollect — IPv4-сети сервиса: google
 ! prefixes: 190
-! generated_at: 2026-08-19T12:42:07+00:00
+! generated_at: 2026-08-20T01:07:32+00:00
 ! sources: ripestat-ris(AS×14), official:google_json, exclude[ripestat-ris(AS×1), official:google_json]
 
 ip prefix-list google permit 8.8.4.0/24
