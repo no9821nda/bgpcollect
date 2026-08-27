@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: all
-# prefixes: 449
-# generated_at: 2026-08-26T12:48:39+00:00
+# prefixes: 480
+# generated_at: 2026-08-27T07:24:33+00:00
 # sources: exclude[ripestat-ris(AS×1), official:google_json], official:cidr_list, official:google_json, official:whois_asset, ripestat-ris(AS×1), ripestat-ris(AS×14), ripestat-ris(AS×2), ripestat-ris(AS×5), static
 
 create all hash:net family inet hashsize 4096 maxelem 1000000 -exist
@@ -349,7 +349,7 @@ add all 136.23.33.0/24 -exist
 add all 136.23.34.0/23 -exist
 add all 136.23.39.0/24 -exist
 add all 136.23.48.0/20 -exist
-add all 136.121.4.0/24 -exist
+add all 136.121.4.0/23 -exist
 add all 136.121.32.0/21 -exist
 add all 137.135.191.176/28 -exist
 add all 138.91.46.96/28 -exist
@@ -362,6 +362,8 @@ add all 152.65.214.0/23 -exist
 add all 152.65.218.0/23 -exist
 add all 152.65.222.0/23 -exist
 add all 152.65.224.0/19 -exist
+add all 152.238.0.0/16 -exist
+add all 152.239.128.0/17 -exist
 add all 157.240.0.0/16 -exist
 add all 158.158.5.32/28 -exist
 add all 160.79.104.0/21 -exist
@@ -419,7 +421,14 @@ add all 172.253.128.0/17 -exist
 add all 173.194.0.0/16 -exist
 add all 173.252.64.0/18 -exist
 add all 176.126.58.0/24 -exist
+add all 177.176.0.0/16 -exist
+add all 177.178.0.0/15 -exist
+add all 177.208.0.0/15 -exist
 add all 179.60.192.0/22 -exist
+add all 179.67.0.0/17 -exist
+add all 179.69.128.0/17 -exist
+add all 179.193.128.0/17 -exist
+add all 179.199.0.0/17 -exist
 add all 185.25.28.0/23 -exist
 add all 185.25.30.0/24 -exist
 add all 185.60.216.0/22 -exist
@@ -427,6 +436,28 @@ add all 185.76.151.0/24 -exist
 add all 185.89.216.0/22 -exist
 add all 185.192.249.0/24 -exist
 add all 185.225.248.0/24 -exist
+add all 186.242.0.0/17 -exist
+add all 186.245.0.0/16 -exist
+add all 187.78.0.0/17 -exist
+add all 187.79.0.0/17 -exist
+add all 187.126.128.0/17 -exist
+add all 189.24.128.0/17 -exist
+add all 189.48.0.0/16 -exist
+add all 189.49.128.0/17 -exist
+add all 189.70.0.0/15 -exist
+add all 189.82.0.0/15 -exist
+add all 189.105.128.0/17 -exist
+add all 189.106.0.0/15 -exist
+add all 191.0.128.0/17 -exist
+add all 191.2.0.0/15 -exist
+add all 191.40.128.0/17 -exist
+add all 191.44.128.0/17 -exist
+add all 191.45.128.0/17 -exist
+add all 191.46.0.0/15 -exist
+add all 191.212.0.0/15 -exist
+add all 191.216.128.0/17 -exist
+add all 191.218.0.0/17 -exist
+add all 191.220.0.0/15 -exist
 add all 191.233.199.160/28 -exist
 add all 191.237.249.64/28 -exist
 add all 192.104.160.0/23 -exist
