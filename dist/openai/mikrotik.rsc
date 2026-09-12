@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: openai
-# prefixes: 242
-# generated_at: 2026-09-11T15:54:04+00:00
+# prefixes: 247
+# generated_at: 2026-09-12T03:13:44+00:00
 # sources: official:google_json, official:google_json, official:google_json
 
 /ip firewall address-list
@@ -52,6 +52,7 @@ add list=openai address=20.55.229.144/28
 add list=openai address=20.57.199.192/28
 add list=openai address=20.63.180.96/28
 add list=openai address=20.63.221.64/28
+add list=openai address=20.78.130.48/28
 add list=openai address=20.83.243.176/28
 add list=openai address=20.98.18.80/28
 add list=openai address=20.102.212.144/28
@@ -84,6 +85,7 @@ add list=openai address=20.172.29.32/28
 add list=openai address=20.199.211.160/28
 add list=openai address=20.199.242.0/28
 add list=openai address=20.200.212.240/28
+add list=openai address=20.206.101.192/28
 add list=openai address=20.210.211.192/28
 add list=openai address=20.215.187.208/28
 add list=openai address=20.215.219.128/28
@@ -91,6 +93,7 @@ add list=openai address=20.215.219.160/28
 add list=openai address=20.215.219.208/28
 add list=openai address=20.218.30.240/28
 add list=openai address=20.219.71.192/28
+add list=openai address=20.219.184.96/28
 add list=openai address=20.222.36.192/28
 add list=openai address=20.227.140.32/28
 add list=openai address=20.228.106.176/28
@@ -103,6 +106,7 @@ add list=openai address=23.98.186.64/28
 add list=openai address=23.98.186.96/28
 add list=openai address=23.98.186.176/28
 add list=openai address=23.98.186.192/28
+add list=openai address=23.101.217.176/28
 add list=openai address=23.102.140.144/28
 add list=openai address=23.102.141.32/28
 add list=openai address=23.102.145.48/28
@@ -182,6 +186,7 @@ add list=openai address=74.7.244.0/25
 add list=openai address=74.161.200.96/28
 add list=openai address=74.224.217.64/28
 add list=openai address=74.226.253.160/28
+add list=openai address=74.248.37.160/28
 add list=openai address=85.211.128.16/28
 add list=openai address=85.211.128.32/28
 add list=openai address=104.208.184.192/28

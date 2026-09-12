@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: google
-# prefixes: 215
-# generated_at: 2026-09-11T15:53:58+00:00
+# prefixes: 184
+# generated_at: 2026-09-12T03:13:40+00:00
 # sources: ripestat-ris(AS×14), official:google_json, exclude[ripestat-ris(AS×1), official:google_json]
 
 create google hash:net family inet hashsize 4096 maxelem 1000000 -exist
@@ -148,8 +148,6 @@ add google 152.65.214.0/23 -exist
 add google 152.65.218.0/23 -exist
 add google 152.65.222.0/23 -exist
 add google 152.65.224.0/19 -exist
-add google 152.238.0.0/16 -exist
-add google 152.239.128.0/17 -exist
 add google 162.120.128.0/17 -exist
 add google 172.102.10.0/23 -exist
 add google 172.110.32.0/21 -exist
@@ -164,39 +162,10 @@ add google 172.253.64.0/18 -exist
 add google 172.253.128.0/17 -exist
 add google 173.194.0.0/16 -exist
 add google 176.126.58.0/24 -exist
-add google 177.176.0.0/16 -exist
-add google 177.178.0.0/15 -exist
-add google 177.208.0.0/15 -exist
-add google 179.67.0.0/17 -exist
-add google 179.69.128.0/17 -exist
-add google 179.193.128.0/17 -exist
-add google 179.199.0.0/17 -exist
 add google 185.25.28.0/23 -exist
 add google 185.25.30.0/24 -exist
 add google 185.192.249.0/24 -exist
 add google 185.225.248.0/24 -exist
-add google 186.242.0.0/17 -exist
-add google 186.245.0.0/16 -exist
-add google 187.78.0.0/17 -exist
-add google 187.79.0.0/17 -exist
-add google 187.126.128.0/17 -exist
-add google 189.24.128.0/17 -exist
-add google 189.48.0.0/16 -exist
-add google 189.49.128.0/17 -exist
-add google 189.70.0.0/15 -exist
-add google 189.82.0.0/15 -exist
-add google 189.105.128.0/17 -exist
-add google 189.106.0.0/15 -exist
-add google 191.0.128.0/17 -exist
-add google 191.2.0.0/15 -exist
-add google 191.40.128.0/17 -exist
-add google 191.44.128.0/17 -exist
-add google 191.45.128.0/17 -exist
-add google 191.46.0.0/15 -exist
-add google 191.212.0.0/15 -exist
-add google 191.216.128.0/17 -exist
-add google 191.218.0.0/17 -exist
-add google 191.220.0.0/15 -exist
 add google 192.104.160.0/23 -exist
 add google 192.178.0.0/15 -exist
 add google 193.186.4.0/24 -exist

@@ -1,6 +1,6 @@
 ! bgpcollect — IPv4-сети сервиса: all
-! prefixes: 485
-! generated_at: 2026-09-11T15:54:04+00:00
+! prefixes: 459
+! generated_at: 2026-09-12T03:13:44+00:00
 ! sources: exclude[ripestat-ris(AS×1), official:google_json], official:cidr_list, official:google_json, official:whois_asset, ripestat-ris(AS×1), ripestat-ris(AS×14), ripestat-ris(AS×2), ripestat-ris(AS×5), static
 
 ip prefix-list all permit 4.151.71.176/28
@@ -53,6 +53,7 @@ ip prefix-list all permit 20.55.229.144/28
 ip prefix-list all permit 20.57.199.192/28
 ip prefix-list all permit 20.63.180.96/28
 ip prefix-list all permit 20.63.221.64/28
+ip prefix-list all permit 20.78.130.48/28
 ip prefix-list all permit 20.83.243.176/28
 ip prefix-list all permit 20.98.18.80/28
 ip prefix-list all permit 20.102.212.144/28
@@ -85,6 +86,7 @@ ip prefix-list all permit 20.172.29.32/28
 ip prefix-list all permit 20.199.211.160/28
 ip prefix-list all permit 20.199.242.0/28
 ip prefix-list all permit 20.200.212.240/28
+ip prefix-list all permit 20.206.101.192/28
 ip prefix-list all permit 20.210.211.192/28
 ip prefix-list all permit 20.215.187.208/28
 ip prefix-list all permit 20.215.219.128/28
@@ -92,6 +94,7 @@ ip prefix-list all permit 20.215.219.160/28
 ip prefix-list all permit 20.215.219.208/28
 ip prefix-list all permit 20.218.30.240/28
 ip prefix-list all permit 20.219.71.192/28
+ip prefix-list all permit 20.219.184.96/28
 ip prefix-list all permit 20.222.36.192/28
 ip prefix-list all permit 20.227.140.32/28
 ip prefix-list all permit 20.228.106.176/28
@@ -104,6 +107,7 @@ ip prefix-list all permit 23.98.186.64/28
 ip prefix-list all permit 23.98.186.96/28
 ip prefix-list all permit 23.98.186.176/28
 ip prefix-list all permit 23.98.186.192/28
+ip prefix-list all permit 23.101.217.176/28
 ip prefix-list all permit 23.102.140.144/28
 ip prefix-list all permit 23.102.141.32/28
 ip prefix-list all permit 23.102.145.48/28
@@ -241,6 +245,7 @@ ip prefix-list all permit 74.125.0.0/16
 ip prefix-list all permit 74.161.200.96/28
 ip prefix-list all permit 74.224.217.64/28
 ip prefix-list all permit 74.226.253.160/28
+ip prefix-list all permit 74.248.37.160/28
 ip prefix-list all permit 85.211.128.16/28
 ip prefix-list all permit 85.211.128.32/28
 ip prefix-list all permit 89.207.224.0/24
@@ -361,8 +366,6 @@ ip prefix-list all permit 152.65.214.0/23
 ip prefix-list all permit 152.65.218.0/23
 ip prefix-list all permit 152.65.222.0/23
 ip prefix-list all permit 152.65.224.0/19
-ip prefix-list all permit 152.238.0.0/16
-ip prefix-list all permit 152.239.128.0/17
 ip prefix-list all permit 157.240.0.0/16
 ip prefix-list all permit 158.158.5.32/28
 ip prefix-list all permit 160.79.104.0/21
@@ -421,14 +424,7 @@ ip prefix-list all permit 172.253.128.0/17
 ip prefix-list all permit 173.194.0.0/16
 ip prefix-list all permit 173.252.64.0/18
 ip prefix-list all permit 176.126.58.0/24
-ip prefix-list all permit 177.176.0.0/16
-ip prefix-list all permit 177.178.0.0/15
-ip prefix-list all permit 177.208.0.0/15
 ip prefix-list all permit 179.60.192.0/22
-ip prefix-list all permit 179.67.0.0/17
-ip prefix-list all permit 179.69.128.0/17
-ip prefix-list all permit 179.193.128.0/17
-ip prefix-list all permit 179.199.0.0/17
 ip prefix-list all permit 185.25.28.0/23
 ip prefix-list all permit 185.25.30.0/24
 ip prefix-list all permit 185.60.216.0/22
@@ -436,28 +432,6 @@ ip prefix-list all permit 185.76.151.0/24
 ip prefix-list all permit 185.89.216.0/22
 ip prefix-list all permit 185.192.249.0/24
 ip prefix-list all permit 185.225.248.0/24
-ip prefix-list all permit 186.242.0.0/17
-ip prefix-list all permit 186.245.0.0/16
-ip prefix-list all permit 187.78.0.0/17
-ip prefix-list all permit 187.79.0.0/17
-ip prefix-list all permit 187.126.128.0/17
-ip prefix-list all permit 189.24.128.0/17
-ip prefix-list all permit 189.48.0.0/16
-ip prefix-list all permit 189.49.128.0/17
-ip prefix-list all permit 189.70.0.0/15
-ip prefix-list all permit 189.82.0.0/15
-ip prefix-list all permit 189.105.128.0/17
-ip prefix-list all permit 189.106.0.0/15
-ip prefix-list all permit 191.0.128.0/17
-ip prefix-list all permit 191.2.0.0/15
-ip prefix-list all permit 191.40.128.0/17
-ip prefix-list all permit 191.44.128.0/17
-ip prefix-list all permit 191.45.128.0/17
-ip prefix-list all permit 191.46.0.0/15
-ip prefix-list all permit 191.212.0.0/15
-ip prefix-list all permit 191.216.128.0/17
-ip prefix-list all permit 191.218.0.0/17
-ip prefix-list all permit 191.220.0.0/15
 ip prefix-list all permit 191.232.238.96/28
 ip prefix-list all permit 191.233.197.0/28
 ip prefix-list all permit 191.233.199.160/28
