@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: all
-# prefixes: 473
-# generated_at: 2026-10-02T17:30:17+00:00
+# prefixes: 467
+# generated_at: 2026-10-03T03:53:35+00:00
 # sources: exclude[ripestat-ris(AS×1), official:google_json], official:cidr_list, official:google_json, official:whois_asset, ripestat-ris(AS×1), ripestat-ris(AS×14), ripestat-ris(AS×2), ripestat-ris(AS×5), static
 
 /ip firewall address-list
@@ -211,7 +211,6 @@ add list=all address=57.154.175.0/28
 add list=all address=57.154.187.32/28
 add list=all address=64.9.224.0/23
 add list=all address=64.9.228.0/23
-add list=all address=64.9.236.0/22
 add list=all address=64.15.112.0/20
 add list=all address=64.233.160.0/19
 add list=all address=65.19.244.0/23
@@ -321,7 +320,6 @@ add list=all address=135.220.73.240/28
 add list=all address=135.234.64.0/24
 add list=all address=135.237.131.208/28
 add list=all address=135.237.133.48/28
-add list=all address=136.22.19.0/24
 add list=all address=136.22.64.0/23
 add list=all address=136.22.83.0/24
 add list=all address=136.22.86.0/23
@@ -331,7 +329,6 @@ add list=all address=136.22.101.0/24
 add list=all address=136.22.102.0/23
 add list=all address=136.22.105.0/24
 add list=all address=136.22.106.0/23
-add list=all address=136.22.111.0/24
 add list=all address=136.22.115.0/24
 add list=all address=136.22.122.0/23
 add list=all address=136.22.128.0/23
@@ -356,7 +353,6 @@ add list=all address=136.22.237.0/24
 add list=all address=136.22.239.0/24
 add list=all address=136.22.240.0/24
 add list=all address=136.23.3.0/24
-add list=all address=136.23.13.0/24
 add list=all address=136.23.20.0/24
 add list=all address=136.23.26.0/23
 add list=all address=136.23.34.0/23
@@ -383,7 +379,7 @@ add list=all address=163.70.128.0/17
 add list=all address=163.77.128.0/17
 add list=all address=163.114.128.0/20
 add list=all address=168.63.252.240/28
-add list=all address=172.102.10.0/23
+add list=all address=172.102.10.0/24
 add list=all address=172.110.32.0/21
 add list=all address=172.162.248.64/28
 add list=all address=172.170.1.80/28
@@ -470,8 +466,6 @@ add list=all address=208.117.224.0/19
 add list=all address=209.85.128.0/17
 add list=all address=209.107.177.0/24
 add list=all address=209.107.179.0/24
-add list=all address=209.107.181.0/24
-add list=all address=209.107.189.0/24
 add list=all address=209.119.80.0/23
 add list=all address=216.58.192.0/19
 add list=all address=216.73.80.0/20
