@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: meta
 # prefixes: 34
-# generated_at: 2026-10-07T18:27:18+00:00
+# generated_at: 2026-10-08T04:37:00+00:00
 # sources: ripestat-ris(AS×5), official:whois_asset
 
 /ip firewall address-list
