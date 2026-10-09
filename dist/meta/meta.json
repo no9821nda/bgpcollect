@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-09T04:40:24+00:00",
+  "generated_at": "2026-10-09T17:59:21+00:00",
   "sources": [
     "ripestat-ris(AS×5)",
     "official:whois_asset"
@@ -12,8 +12,8 @@
     149769
   ],
   "raw_prefix_count": 1207,
-  "added": 2,
-  "removed": 1,
+  "added": 0,
+  "removed": 0,
   "service": "meta",
   "prefix_count": 35,
   "address_count": 541696
