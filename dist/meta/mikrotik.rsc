@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: meta
-# prefixes: 34
-# generated_at: 2026-10-08T18:26:49+00:00
+# prefixes: 35
+# generated_at: 2026-10-09T04:40:24+00:00
 # sources: ripestat-ris(AS×5), official:whois_asset
 
 /ip firewall address-list
@@ -9,7 +9,8 @@ add list=meta address=31.13.64.0/18
 add list=meta address=45.64.40.0/22
 add list=meta address=57.141.0.0/20
 add list=meta address=57.141.16.0/21
-add list=meta address=57.141.24.0/23
+add list=meta address=57.141.24.0/22
+add list=meta address=57.141.28.0/23
 add list=meta address=57.144.0.0/14
 add list=meta address=66.220.144.0/20
 add list=meta address=69.63.176.0/20
