@@ -1,10 +1,9 @@
 {
-  "generated_at": "2026-10-23T03:28:44+00:00",
+  "generated_at": "2026-10-23T16:30:01+00:00",
   "sources": [
     "exclude[ripestat-ris(AS×1), official:google_json]",
     "official:cidr_list",
     "official:google_json",
-    "official:whois_asset",
     "ripestat-ris(AS×1)",
     "ripestat-ris(AS×14)",
     "ripestat-ris(AS×2)",
@@ -14,12 +13,13 @@
   "services": [
     "google",
     "youtube",
-    "meta",
     "telegram",
     "claude",
     "openai"
   ],
-  "stale_services": [],
+  "stale_services": [
+    "meta"
+  ],
   "service": "all",
   "prefix_count": 513,
   "address_count": 3498016
