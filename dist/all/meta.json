@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-23T16:30:01+00:00",
+  "generated_at": "2026-10-24T03:22:48+00:00",
   "sources": [
     "exclude[ripestat-ris(AS×1), official:google_json]",
     "official:cidr_list",
@@ -21,6 +21,6 @@
     "meta"
   ],
   "service": "all",
-  "prefix_count": 513,
-  "address_count": 3498016
+  "prefix_count": 510,
+  "address_count": 3520032
 }

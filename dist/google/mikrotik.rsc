@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: google
-# prefixes: 175
-# generated_at: 2026-10-23T16:29:56+00:00
+# prefixes: 172
+# generated_at: 2026-10-24T03:22:44+00:00
 # sources: ripestat-ris(AS×14), official:google_json, exclude[ripestat-ris(AS×1), official:google_json]
 
 /ip firewall address-list
@@ -97,6 +97,8 @@ add list=google address=108.177.82.0/23
 add list=google address=108.177.88.0/21
 add list=google address=108.177.96.0/19
 add list=google address=128.177.134.0/24
+add list=google address=136.22.12.0/22
+add list=google address=136.22.16.0/20
 add list=google address=136.22.64.0/23
 add list=google address=136.22.83.0/24
 add list=google address=136.22.86.0/23
@@ -127,12 +129,7 @@ add list=google address=136.22.233.0/24
 add list=google address=136.22.237.0/24
 add list=google address=136.22.239.0/24
 add list=google address=136.22.240.0/24
-add list=google address=136.23.3.0/24
-add list=google address=136.23.20.0/24
-add list=google address=136.23.26.0/23
-add list=google address=136.23.34.0/23
-add list=google address=136.23.39.0/24
-add list=google address=136.23.48.0/20
+add list=google address=136.23.0.0/18
 add list=google address=136.121.4.0/24
 add list=google address=136.121.32.0/21
 add list=google address=142.250.0.0/15
@@ -142,7 +139,7 @@ add list=google address=152.65.218.0/23
 add list=google address=152.65.222.0/23
 add list=google address=152.65.224.0/19
 add list=google address=162.120.128.0/17
-add list=google address=172.102.10.0/24
+add list=google address=172.102.8.0/21
 add list=google address=172.110.32.0/21
 add list=google address=172.217.0.0/19
 add list=google address=172.217.32.0/20
@@ -156,6 +153,7 @@ add list=google address=172.253.128.0/17
 add list=google address=173.194.0.0/16
 add list=google address=185.25.28.0/23
 add list=google address=185.25.30.0/24
+add list=google address=185.150.148.0/22
 add list=google address=185.192.249.0/24
 add list=google address=185.225.248.0/24
 add list=google address=192.104.160.0/23
@@ -172,8 +170,7 @@ add list=google address=208.68.108.0/22
 add list=google address=208.104.202.0/24
 add list=google address=208.117.224.0/19
 add list=google address=209.85.128.0/17
-add list=google address=209.107.177.0/24
-add list=google address=209.107.179.0/24
+add list=google address=209.107.176.0/20
 add list=google address=209.119.80.0/23
 add list=google address=216.58.192.0/19
 add list=google address=216.73.80.0/20
