@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: google
-# prefixes: 172
-# generated_at: 2026-10-27T17:30:42+00:00
+# prefixes: 171
+# generated_at: 2026-10-28T04:06:10+00:00
 # sources: ripestat-ris(AS×14), official:google_json, exclude[ripestat-ris(AS×1), official:google_json]
 
 /ip firewall address-list
@@ -152,7 +152,6 @@ add list=google address=172.253.64.0/18
 add list=google address=172.253.128.0/17
 add list=google address=173.194.0.0/16
 add list=google address=185.25.28.0/23
-add list=google address=185.25.30.0/24
 add list=google address=185.150.148.0/22
 add list=google address=185.192.249.0/24
 add list=google address=185.225.248.0/24
