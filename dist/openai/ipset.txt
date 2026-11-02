@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: openai
 # prefixes: 266
-# generated_at: 2026-11-01T17:39:36+00:00
+# generated_at: 2026-11-02T04:33:08+00:00
 # sources: official:google_json, official:google_json, official:google_json
 
 create openai hash:net family inet hashsize 4096 maxelem 1000000 -exist
