@@ -1,6 +1,6 @@
 # bgpcollect — IPv4-сети сервиса: google
-# prefixes: 168
-# generated_at: 2026-11-17T20:29:29+00:00
+# prefixes: 166
+# generated_at: 2026-11-18T05:58:14+00:00
 # sources: ripestat-ris(AS×14), official:google_json, exclude[ripestat-ris(AS×1), official:google_json]
 
 create google hash:net family inet hashsize 4096 maxelem 1000000 -exist
@@ -101,13 +101,11 @@ add google 136.22.64.0/23 -exist
 add google 136.22.83.0/24 -exist
 add google 136.22.86.0/23 -exist
 add google 136.22.94.0/23 -exist
-add google 136.22.98.0/24 -exist
 add google 136.22.101.0/24 -exist
 add google 136.22.102.0/23 -exist
 add google 136.22.105.0/24 -exist
 add google 136.22.106.0/24 -exist
 add google 136.22.115.0/24 -exist
-add google 136.22.122.0/23 -exist
 add google 136.22.128.0/23 -exist
 add google 136.22.130.0/24 -exist
 add google 136.22.132.0/22 -exist
