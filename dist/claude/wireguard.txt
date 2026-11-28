@@ -1,5 +1,5 @@
 # bgpcollect — IPv4-сети сервиса: claude
 # prefixes: 1
-# generated_at: 2026-11-27T20:42:11+00:00
+# generated_at: 2026-11-28T06:23:55+00:00
 # sources: ripestat-ris(AS×1), static
 AllowedIPs = 160.79.104.0/21
